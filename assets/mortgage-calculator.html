@@ -892,7 +892,8 @@
             if (!(key in inputs)) return;
             if (inputs[key].type === "checkbox") {
               inputs[key].checked = Boolean(value);
-            } else if (!inputs[key].value) {
+            } else {
+              // Always update program-specific fields (pmi_pct, upfront_fee_pct, annual_mi_pct)
               inputs[key].value = value;
             }
           });
