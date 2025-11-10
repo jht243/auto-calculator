@@ -302,12 +302,32 @@ function createMortgageCalculatorServer(): Server {
         throw new Error(`Unknown resource: ${request.params.uri}`);
       }
 
+      // Inject current FRED rate into HTML before sending to ChatGPT
+      let htmlToSend = widget.html;
+      let displayRate: number | null = null;
+      if (fredRateCache && fredRateCache.payload && typeof fredRateCache.payload.ratePercent === "number") {
+        displayRate = fredRateCache.payload.ratePercent;
+      } else {
+        const latest = await fetchFredLatestRate();
+        if (latest) {
+          displayRate = Math.round((latest.adjusted) * 10) / 10;
+        }
+      }
+      // Only inject if we have a valid live rate. Otherwise leave blank.
+      if (displayRate != null && Number.isFinite(displayRate)) {
+        const rateText = `${displayRate}%`;
+        htmlToSend = htmlToSend.replace(
+          /(<span\s+class="rate-num">)([^<]*?)(<\/span>)/,
+          (_m: any, p1: string, _p2: string, p3: string) => `${p1}${rateText}${p3}`
+        );
+      }
+
       return {
         contents: [
           {
             uri: widget.templateUri,
             mimeType: "text/html+skybridge",
-            text: widget.html,
+            text: htmlToSend,
             _meta: widgetMeta(widget),
           },
         ],
