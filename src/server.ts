@@ -301,7 +301,13 @@ function createMortgageCalculatorServer(): Server {
 
   server.setRequestHandler(
     ListResourcesRequestSchema,
-    async (_request: ListResourcesRequest) => ({ resources })
+    async (_request: ListResourcesRequest) => {
+      console.log(`[MCP] resources/list called, returning ${resources.length} resources`);
+      resources.forEach((r: any) => {
+        console.log(`  - ${r.uri} (${r.name})`);
+      });
+      return { resources };
+    }
   );
 
   server.setRequestHandler(
@@ -413,6 +419,9 @@ function createMortgageCalculatorServer(): Server {
           userAgent,
         });
 
+        const widgetMetadata = widgetMeta(widget);
+        console.log(`[MCP] Tool called: ${request.params.name}, returning templateUri: ${(widgetMetadata as any)["openai/outputTemplate"]}`);
+
         return {
           content: [
             {
@@ -421,7 +430,7 @@ function createMortgageCalculatorServer(): Server {
             },
           ],
           structuredContent: null,
-          _meta: widgetMeta(widget),
+          _meta: widgetMetadata,
         };
       } catch (error: any) {
         logAnalytics("tool_call_error", {
