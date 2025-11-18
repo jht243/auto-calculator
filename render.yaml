@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: rental-property-calculator
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      # Optional: set a password to gate the analytics dashboard
+      - key: ANALYTICS_PASSWORD
+        sync: false
+      # Optional: provide a FRED API key to show live mortgage rates in the widget badge
+      - key: FRED_API_KEY
+        sync: false
+      - key: FRED_SERIES_ID
+        value: MORTGAGE30US
