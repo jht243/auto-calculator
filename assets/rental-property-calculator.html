@@ -28,8 +28,9 @@
         background: transparent;
         color: #e2e8f0;
         overflow-x: hidden;
-        overscroll-behavior: auto;
+        touch-action: auto;
         -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
       }
 
       .app {
@@ -45,8 +46,8 @@
         box-shadow: none;
         box-sizing: border-box;
         touch-action: auto;
-        overscroll-behavior: auto;
         -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
       }
 
       header h1 {
@@ -145,7 +146,6 @@
       .collapsible-content {
         padding: 14px 16px;
         margin-top: 0;
-        touch-action: auto;
       }
 
       .collapsible-content .grid + .grid {
@@ -194,9 +194,6 @@
         display: grid;
         gap: 12px;
         box-shadow: 0 4px 12px rgba(10, 13, 28, 0.4);
-        touch-action: auto;
-        overscroll-behavior: auto;
-        -webkit-overflow-scrolling: touch;
         min-width: 0;
       }
 
@@ -221,7 +218,6 @@
         display: grid;
         gap: 14px;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        touch-action: auto;
       }
 
       .grid > * {
