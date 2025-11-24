@@ -929,7 +929,7 @@ function createAutoLoanCalculatorServer(): Server {
         } catch {}
 
         return {
-          // Omit content to suppress text
+          content: [],
           structuredContent: structured,
           _meta: metaForReturn,
         };
