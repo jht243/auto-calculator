@@ -1,24 +1,31 @@
 <!doctype html>
 <html>
+
   <head>
     <meta charset="utf-8" />
-    <title>Auto Loan & Lease Calculator — Monthly Payment, Lease Estimates, and Amortization</title>
-    <meta name="description" content="An interactive auto loan & lease calculator that helps you determine your monthly car payment, lease costs, total interest paid, and see a full amortization schedule. Adjust vehicle price, down payment, APR/money factor, and term to see how it affects your financing." />
-    <meta property="og:title" content="Auto Loan & Lease Calculator — Estimate Your Car Payments" />
-    <meta property="og:description" content="Use this simple and powerful auto loan & lease calculator to figure out your monthly payments and total financing cost." />
-    <meta name="keywords" content="auto loan calculator, auto lease calculator, car payment calculator, vehicle financing, lease vs buy, car lease, residual value, auto loan interest" />
-    <script>
-      window.__TURNSTILE_LOADED__ = false;
-      window.onTurnstileLoad = function () {
-        window.__TURNSTILE_LOADED__ = true;
-        try {
-          window.dispatchEvent(new CustomEvent('turnstile-ready'));
-        } catch (_) {}
-      };
-    </script>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" async defer></script>
+  <title>Auto Loan & Lease Calculator — Monthly Payment, Lease Estimates, and Amortization</title>
+  <meta name="description"
+    content="An interactive auto loan & lease calculator that helps you determine your monthly car payment, lease costs, total interest paid, and see a full amortization schedule. Adjust vehicle price, down payment, APR/money factor, and term to see how it affects your financing." />
+  <meta property="og:title" content="Auto Loan & Lease Calculator — Estimate Your Car Payments" />
+  <meta property="og:description"
+    content="Use this simple and powerful auto loan & lease calculator to figure out your monthly payments and total financing cost." />
+  <meta name="keywords"
+    content="auto loan calculator, auto lease calculator, car payment calculator, vehicle financing, lease vs buy, car lease, residual value, auto loan interest" />
+  <script>
+    window.__TURNSTILE_LOADED__ = false;
+    window.onTurnstileLoad = function () {
+      window.__TURNSTILE_LOADED__ = true;
+      try {
+        window.dispatchEvent(new CustomEvent('turnstile-ready'));
+      } catch (_) { }
+    };
+  </script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" async
+    defer></script>
     <style>
-      *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         box-sizing: border-box;
       }
 
@@ -102,24 +109,42 @@
         width: 100%;
         align-items: center;
       }
+
       .summary-spacer {
         flex-grow: 1;
       }
-      .purchase-header-toggles, .sell-header-toggle {
+
+    .purchase-header-toggles,
+    .sell-header-toggle {
         flex-shrink: 0;
         display: flex;
         align-items: center;
         gap: 16px;
       }
-      .purchase-header-toggles .row { display: flex; align-items: center; gap: 16px; }
-      .purchase-header-toggles .label { margin: 0; font-size: 10px; white-space: nowrap; color: rgba(148,163,184,0.8); }
-      .purchase-header-toggles .yesno-toggle, .sell-header-toggle .yesno-toggle {
+
+    .purchase-header-toggles .row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .purchase-header-toggles .label {
+      margin: 0;
+      font-size: 10px;
+      white-space: nowrap;
+      color: rgba(148, 163, 184, 0.8);
+    }
+
+    .purchase-header-toggles .yesno-toggle,
+    .sell-header-toggle .yesno-toggle {
         transform: scale(0.9);
         transform-origin: right center;
       }
 
       @media (max-width: 620px) {
-        .purchase-header-toggles, .sell-header-toggle {
+
+      .purchase-header-toggles,
+      .sell-header-toggle {
           display: none;
         }
       }
@@ -158,20 +183,21 @@
         margin-top: 0;
       }
 
-      .collapsible-content .grid + .grid {
+    .collapsible-content .grid+.grid {
         margin-top: 12px;
       }
 
       /* Normalize vertical spacing inside Purchase Details */
-      [data-openai-component="purchase-details"] .collapsible-content .grid + .grid {
-        margin-top: 18px; /* match prior project spacing */
+    [data-openai-component="purchase-details"] .collapsible-content .grid+.grid {
+      margin-top: 18px;
+      /* match prior project spacing */
       }
 
       .field-group {
         padding: 16px 0 12px;
       }
 
-      .field-group + .field-group {
+    .field-group+.field-group {
         border-top: 1px solid rgba(148, 163, 184, 0.08);
         padding-top: 20px;
       }
@@ -212,47 +238,65 @@
         min-width: 0;
       }
 
-      .captcha-wrapper {
-        margin-top: 16px;
-        padding: 12px 0;
-        border-top: 1px solid rgba(148, 163, 184, 0.12);
-      }
+    .captcha-wrapper {
+      margin-top: 16px;
+      padding: 12px 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+    }
 
-      .turnstile-placeholder {
-        min-height: 78px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    .section-block.section-centered {
+      text-align: center;
+    }
 
-      .captcha-footnote {
-        display: block;
-        margin-top: 6px;
-        font-size: 11px;
-        color: rgba(148, 163, 184, 0.7);
-        text-align: center;
-      }
+    .section-block.section-centered .section-title {
+      text-align: center;
+    }
 
-      .captcha-error {
-        color: #fca5a5;
-        font-size: 12px;
-        text-align: center;
+    .section-block.section-centered .breakdown-chart {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      max-width: 820px;
+      width: 100%;
+    }
+
+    .turnstile-placeholder {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .captcha-footnote {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      color: rgba(148, 163, 184, 0.7);
+      text-align: center;
+    }
+
+    .captcha-error {
+      color: #fca5a5;
+      font-size: 12px;
+      text-align: center;
       }
 
       details.section-block {
         padding: 0;
       }
 
-      details.section-block > summary {
+    details.section-block>summary {
         padding: 0;
       }
 
-      details.section-block > summary.section-summary {
+    details.section-block>summary.section-summary {
         padding: 0 18px;
         min-height: 46px;
       }
 
-      details.section-block > .collapsible-content {
+    details.section-block>.collapsible-content {
         padding-bottom: 14px;
       }
 
@@ -261,13 +305,14 @@
         gap: 14px;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       }
+
       /* Ensure consistent spacing within Purchase Details */
       [data-openai-component="purchase-details"] .grid {
         column-gap: 16px;
         row-gap: 18px;
       }
 
-      .grid > * {
+    .grid>* {
         min-width: 0;
       }
 
@@ -277,11 +322,16 @@
       }
 
       .grid.trio-columns {
-        grid-template-columns: repeat(2, minmax(0, 1fr)); /* Max two inputs per row */
-        gap: 16px 18px; /* column x row */
-      }
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      /* Max two inputs per row */
+      gap: 16px 18px;
+      /* column x row */
+    }
+
       /* Checkbox follows normal grid flow in Purchase Details (two per row) */
-      [data-openai-component="purchase-details"] label.checkbox-row { grid-column: auto; }
+    [data-openai-component="purchase-details"] label.checkbox-row {
+      grid-column: auto;
+    }
 
       /* Inline pair: main amount + small percent input aligned horizontally */
       .inline-pair {
@@ -295,18 +345,31 @@
         background: rgba(37, 40, 65, 0.45);
         transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
       }
-      .inline-pair .pair-col { display: grid; gap: 4px; }
-      .percent-compact { position: relative; }
-      .percent-compact input[type="number"] { width: 100%; }
+
+    .inline-pair .pair-col {
+      display: grid;
+      gap: 4px;
+    }
+
+    .percent-compact {
+      position: relative;
+    }
+
+    .percent-compact input[type="number"] {
+      width: 100%;
+    }
+
       .inline-pair:hover {
         border-color: rgba(14, 165, 233, 0.35);
         box-shadow: 0 4px 12px rgba(10, 13, 28, 0.25);
       }
+
       .inline-pair:focus-within {
         border-color: rgba(14, 165, 233, 0.55);
         background: rgba(14, 165, 233, 0.06);
         box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.35), 0 8px 16px rgba(14, 165, 233, 0.18);
       }
+
       /* Loan preset UI */
       .loan-preset-block {
         display: grid;
@@ -315,11 +378,13 @@
         align-items: end;
         margin: 10px 0 6px;
       }
+
       .preset-chips {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
       }
+
       .preset-chip {
         position: relative;
         padding: 8px 14px;
@@ -334,28 +399,43 @@
         transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.06s ease;
         cursor: pointer;
       }
-      .preset-chip:hover { box-shadow: 0 6px 14px rgba(139, 92, 246, 0.2); }
-      .preset-chip:active { transform: translateY(1px); }
+
+    .preset-chip:hover {
+      box-shadow: 0 6px 14px rgba(139, 92, 246, 0.2);
+    }
+
+    .preset-chip:active {
+      transform: translateY(1px);
+    }
+
       .preset-chip.active {
         color: #1a1c2b;
         background: linear-gradient(180deg, rgba(193, 148, 255, 0.95), rgba(168, 85, 247, 0.85));
         border-color: rgba(193, 148, 255, 0.95);
         box-shadow: 0 8px 18px rgba(139, 92, 246, 0.35);
       }
+
       /* Inline preset dropdown next to yes/no toggle */
-      .preset-inline { position: relative; display: inline-block; margin-left: 8px; }
+    .preset-inline {
+      position: relative;
+      display: inline-block;
+      margin-left: 8px;
+    }
+
       .preset-inline::after {
         content: "";
         position: absolute;
         right: 12px;
         top: 50%;
         transform: translateY(-50%);
-        width: 0; height: 0;
+      width: 0;
+      height: 0;
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
         border-top: 6px solid rgba(193, 148, 255, 0.95);
         pointer-events: none;
       }
+
       .preset-select {
         -webkit-appearance: none;
         appearance: none;
@@ -369,9 +449,22 @@
         box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.25);
         cursor: pointer;
       }
-      .preset-select:hover { box-shadow: 0 6px 14px rgba(139, 92, 246, 0.2); }
-      .preset-select:focus { outline: none; border-color: rgba(193, 148, 255, 0.95); box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.35); }
-      .preset-select option { background: #141729; color: #eee7ff; }
+
+    .preset-select:hover {
+      box-shadow: 0 6px 14px rgba(139, 92, 246, 0.2);
+    }
+
+    .preset-select:focus {
+      outline: none;
+      border-color: rgba(193, 148, 255, 0.95);
+      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.35);
+    }
+
+    .preset-select option {
+      background: #141729;
+      color: #eee7ff;
+    }
+
       /* Year 1 Summary split card */
       .result-split {
         position: relative;
@@ -380,6 +473,7 @@
         align-items: flex-start;
         padding-top: 0;
       }
+
       .result-split::before {
         content: "";
         position: absolute;
@@ -390,6 +484,7 @@
         transform: translateX(-0.5px);
         background: linear-gradient(180deg, rgba(148, 163, 184, 0.15), rgba(148, 163, 184, 0.05));
       }
+
       .result-split .split-col {
         flex: 1;
         min-width: 0;
@@ -399,22 +494,38 @@
         align-items: center;
         text-align: center;
       }
-      .result-split .split-col .label { margin-bottom: 4px; }
-      .result-split .split-col .value { margin-top: 0; }
-      .result-split .split-col .hint { margin-top: 4px; opacity: 0.8; }
+
+    .result-split .split-col .label {
+      margin-bottom: 4px;
+    }
+
+    .result-split .split-col .value {
+      margin-top: 0;
+    }
+
+    .result-split .split-col .hint {
+      margin-top: 4px;
+      opacity: 0.8;
+    }
+
       @media (max-width: 720px) {
         .result-split {
           flex-direction: column;
           gap: 18px;
           align-items: center;
         }
-        .result-split::before { display: none; }
+
+      .result-split::before {
+        display: none;
       }
+    }
+
       /* Align lone vacancy label with the two inline pairs in Income */
-      [data-openai-component="income-details"] .grid.trio-columns > label.percent-field {
+    [data-openai-component="income-details"] .grid.trio-columns>label.percent-field {
         align-self: start;
         margin-top: 12px;
       }
+
       .percent-compact::after {
         content: "%";
         position: absolute;
@@ -425,68 +536,350 @@
         color: rgba(226, 232, 240, 0.5);
         pointer-events: none;
       }
+
       /* Outputs slide layout */
-      .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
-      .two-col > * { min-width: 0; }
-      @media (max-width: 1000px) { .two-col { grid-template-columns: 1fr; } }
-      .three-col { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
-      .three-col > * { min-width: 0; }
-      @media (max-width: 1200px) { .three-col { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-      @media (max-width: 900px) { .three-col { grid-template-columns: 1fr; } }
-      @media (max-width: 720px) { .grid.duo-columns, .grid.trio-columns { grid-template-columns: 1fr; } }
-      .metrics-grid { display: grid; gap: 8px; }
-      .metric { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 12px; border-radius: 10px; background: rgba(37, 40, 65, 0.45); border: 1px solid rgba(71, 85, 105, 0.35); }
-      .metric .label { color: rgba(203, 213, 225, 0.9); font-size: 13px; }
-      .metric .value { color: rgba(248, 250, 252, 0.96); font-weight: 600; }
-      .kpi-main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 12px; }
-      @media (max-width: 520px) { .kpi-main { grid-template-columns: 1fr; } }
-      .kpi-item { text-align: center; padding: 14px 12px; border-radius: 12px; background: linear-gradient(180deg, rgba(14, 165, 233, 0.08), rgba(14, 165, 233, 0.02)); border: 1px solid rgba(56, 189, 248, 0.25); }
-      .kpi-item:first-child { background: linear-gradient(180deg, rgba(52, 211, 153, 0.10), rgba(16, 185, 129, 0.035)); border-color: rgba(52, 211, 153, 0.35); }
-      .kpi-label { display: block; font-size: 12px; letter-spacing: 0.06em; color: rgba(226, 232, 240, 0.82); margin-bottom: 4px; text-transform: uppercase; }
-      .kpi-number { display: block; font-size: 28px; font-weight: 700; color: rgba(248, 250, 252, 0.98); line-height: 1.2; }
-      .kpi-sub { display: block; font-size: 13px; color: rgba(203, 213, 225, 0.86); }
-      .neg { color: #fca5a5 !important; }
-      .metrics-table { width: 100%; border-collapse: collapse; table-layout: fixed; background: rgba(23, 26, 45, 0.6); border-radius: 12px; overflow: hidden; }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .two-col>* {
+      min-width: 0;
+    }
+
+    @media (max-width: 1000px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .three-col>* {
+      min-width: 0;
+    }
+
+    @media (max-width: 1200px) {
+      .three-col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .three-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+
+      .grid.duo-columns,
+      .grid.trio-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .metrics-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(37, 40, 65, 0.45);
+      border: 1px solid rgba(71, 85, 105, 0.35);
+    }
+
+    .metric .label {
+      color: rgba(203, 213, 225, 0.9);
+      font-size: 13px;
+    }
+
+    .metric .value {
+      color: rgba(248, 250, 252, 0.96);
+      font-weight: 600;
+    }
+
+    .kpi-main {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .kpi-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .kpi-item {
+      text-align: center;
+      padding: 14px 12px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(14, 165, 233, 0.08), rgba(14, 165, 233, 0.02));
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .kpi-item:first-child {
+      background: linear-gradient(180deg, rgba(52, 211, 153, 0.10), rgba(16, 185, 129, 0.035));
+      border-color: rgba(52, 211, 153, 0.35);
+    }
+
+    .kpi-label {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: rgba(226, 232, 240, 0.82);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .kpi-number {
+      display: block;
+      font-size: 28px;
+      font-weight: 700;
+      color: rgba(248, 250, 252, 0.98);
+      line-height: 1.2;
+    }
+
+    .kpi-sub {
+      display: block;
+      font-size: 13px;
+      color: rgba(203, 213, 225, 0.86);
+    }
+
+    .neg {
+      color: #fca5a5 !important;
+    }
+
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      background: rgba(23, 26, 45, 0.6);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
       /* Distribute columns to fill cell: label 50%, monthly 25%, annual 25% */
-      .metrics-table thead th:nth-child(1), .metrics-table tbody td:nth-child(1) { width: 50%; }
-      .metrics-table thead th:nth-child(2), .metrics-table tbody td:nth-child(2) { width: 25%; }
-      .metrics-table thead th:nth-child(3), .metrics-table tbody td:nth-child(3) { width: 25%; }
-      .metrics-table th, .metrics-table td { padding: 10px 12px; border-bottom: 1px solid rgba(71, 85, 105, 0.35); font-size: 13px; }
-      .metrics-table thead th { background: rgba(30, 41, 59, 0.7); text-align: right; }
-      .metrics-table thead th:first-child { text-align: left; }
-      .metrics-table tbody td:first-child { color: rgba(226, 232, 240, 0.9); text-align: left; }
-      .metrics-table tbody td { text-align: right; color: rgba(248, 250, 252, 0.92); }
-      .metrics-table tr.em td { font-weight: 600; color: #fca5a5; }
+    .metrics-table thead th:nth-child(1),
+    .metrics-table tbody td:nth-child(1) {
+      width: 50%;
+    }
+
+    .metrics-table thead th:nth-child(2),
+    .metrics-table tbody td:nth-child(2) {
+      width: 25%;
+    }
+
+    .metrics-table thead th:nth-child(3),
+    .metrics-table tbody td:nth-child(3) {
+      width: 25%;
+    }
+
+    .metrics-table th,
+    .metrics-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.35);
+      font-size: 13px;
+    }
+
+    .metrics-table thead th {
+      background: rgba(30, 41, 59, 0.7);
+      text-align: right;
+    }
+
+    .metrics-table thead th:first-child {
+      text-align: left;
+    }
+
+    .metrics-table tbody td:first-child {
+      color: rgba(226, 232, 240, 0.9);
+      text-align: left;
+    }
+
+    .metrics-table tbody td {
+      text-align: right;
+      color: rgba(248, 250, 252, 0.92);
+    }
+
+    .metrics-table tr.em td {
+      font-weight: 600;
+      color: #fca5a5;
+    }
+
       /* Hide Year 1 table for simplified one-column layout */
-      .metrics-table-wrap { display: none; }
-      .donut-row { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
-      @media (max-width: 520px) { .donut-row { grid-template-columns: 1fr; } }
+    .metrics-table-wrap {
+      display: none;
+    }
+
+    .donut-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    @media (max-width: 520px) {
+      .donut-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
       /* 2x2 Year 1 grid: KPI x 2 on row 1, table + donut on row 2 */
       .year1-grid {
         display: grid;
-        grid-template-columns: 1fr; /* Force one-column layout */
+      grid-template-columns: 1fr;
+      /* Force one-column layout */
         gap: 16px;
         width: 100%;
         max-width: 100%;
         margin: 0 auto;
         align-items: start;
       }
-      @media (max-width: 1000px) { .year1-grid { grid-template-columns: 1fr; } }
-      .donut-legend { display: grid; gap: 8px; font-size: 13px; color: rgba(226, 232, 240, 0.9); }
-      .donut-legend .legend-item { display: flex; align-items: center; gap: 10px; padding: 4px 0; cursor: default; }
-      .donut-legend .legend-item .swatch { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.06) inset; flex: 0 0 auto; }
-      .donut-legend .legend-item .name { color: rgba(241, 245, 249, 0.96); font-weight: 500; }
-      .donut-legend .legend-item .pct { margin-left: auto; color: rgba(203, 213, 225, 0.85); }
-      .breakdown-table-wrap { justify-self: start; }
+
+    @media (max-width: 1000px) {
+      .year1-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .donut-legend {
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+      color: rgba(226, 232, 240, 0.9);
+    }
+
+    .donut-legend .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 0;
+      cursor: default;
+    }
+
+    .donut-legend .legend-item .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06) inset;
+      flex: 0 0 auto;
+    }
+
+    .donut-legend .legend-item .name {
+      color: rgba(241, 245, 249, 0.96);
+      font-weight: 500;
+    }
+
+    .donut-legend .legend-item .pct {
+      margin-left: auto;
+      color: rgba(203, 213, 225, 0.85);
+    }
+
+    .donut-legend.schedule-legend {
+      gap: 12px;
+    }
+
+    .donut-legend.schedule-legend .legend-item {
+      align-items: flex-start;
+      padding: 12px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.45);
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .donut-legend.schedule-legend .legend-item .swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      box-shadow: none;
+    }
+
+    .donut-legend.schedule-legend .legend-item .legend-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+    }
+
+    .donut-legend.schedule-legend .legend-item .legend-text strong {
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      color: rgba(248, 250, 252, 0.95);
+    }
+
+    .donut-legend.schedule-legend .legend-item .legend-desc {
+      font-size: 13px;
+      color: rgba(203, 213, 225, 0.88);
+    }
+
+    .breakdown-table-wrap {
+      justify-self: start;
+    }
+
       /* Year-by-Year table: prevent horizontal overflow expanding layout */
       /* Shrink to content so no extra dark space to the right of Ending Balance */
-      .yearly-table { width: auto; border-collapse: collapse; display: inline-table; max-width: 100%; background: rgba(23, 26, 45, 0.6); border-radius: 12px; }
-      .yearly-table th, .yearly-table td { padding: 10px 12px; border-bottom: 1px solid rgba(71, 85, 105, 0.35); font-size: 13px; text-align: right; }
-      .yearly-table thead th:first-child, .yearly-table tbody td:first-child { text-align: left; }
-      @media (max-width: 720px) { .metrics-table th, .metrics-table td { font-size: 12px; padding: 8px 10px; } .kpi-number { font-size: 26px; } }
+    .yearly-table {
+      width: auto;
+      border-collapse: collapse;
+      display: inline-table;
+      max-width: 100%;
+      background: rgba(23, 26, 45, 0.6);
+      border-radius: 12px;
+    }
 
-      @media (max-width: 720px) { .inline-pair { grid-template-columns: 1fr 96px; } }
-      @media (max-width: 640px) { .inline-pair { grid-template-columns: 1fr 88px; } }
+    .yearly-table th,
+    .yearly-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.35);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    .yearly-table thead th:first-child,
+    .yearly-table tbody td:first-child {
+      text-align: left;
+    }
+
+    @media (max-width: 720px) {
+
+      .metrics-table th,
+      .metrics-table td {
+        font-size: 12px;
+        padding: 8px 10px;
+      }
+
+      .kpi-number {
+        font-size: 26px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .inline-pair {
+        grid-template-columns: 1fr 96px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .inline-pair {
+        grid-template-columns: 1fr 88px;
+      }
+    }
 
       .is-hidden {
         display: none !important;
@@ -530,9 +923,14 @@
         max-width: 260px;
         width: min(260px, 100%);
       }
+
       @media (max-width: 640px) {
+
         #purchase_inputs_row #purchase_price,
-        #purchase_inputs_row #closing_cost { max-width: 200px; width: min(200px, 100%); }
+      #purchase_inputs_row #closing_cost {
+        max-width: 200px;
+        width: min(200px, 100%);
+      }
       }
 
       .percent-field {
@@ -582,7 +980,7 @@
         appearance: none;
         height: 4px;
         border-radius: 999px;
-        background: linear-gradient(90deg, rgba(14,165,233,0.45), rgba(56,189,248,0.35));
+      background: linear-gradient(90deg, rgba(14, 165, 233, 0.45), rgba(56, 189, 248, 0.35));
         outline: none;
       }
 
@@ -592,8 +990,8 @@
         height: 16px;
         border-radius: 50%;
         background: #22d3ee;
-        border: 2px solid rgba(15,23,42,0.85);
-        box-shadow: 0 4px 10px rgba(14,165,233,0.45);
+      border: 2px solid rgba(15, 23, 42, 0.85);
+      box-shadow: 0 4px 10px rgba(14, 165, 233, 0.45);
         cursor: pointer;
       }
 
@@ -602,8 +1000,8 @@
         height: 16px;
         border-radius: 50%;
         background: #22d3ee;
-        border: 2px solid rgba(15,23,42,0.85);
-        box-shadow: 0 4px 10px rgba(14,165,233,0.45);
+      border: 2px solid rgba(15, 23, 42, 0.85);
+      box-shadow: 0 4px 10px rgba(14, 165, 233, 0.45);
         cursor: pointer;
       }
 
@@ -638,9 +1036,11 @@
       .scenario-chip {
         padding: 8px 14px;
         border-radius: 999px;
-        border: 1px solid rgba(167, 139, 250, 0.55); /* light purple border */
+      border: 1px solid rgba(167, 139, 250, 0.55);
+      /* light purple border */
         background: rgba(20, 23, 42, 0.85);
-        color: #c4b5fd; /* light purple text */
+      color: #c4b5fd;
+      /* light purple text */
         font-size: 11px;
         letter-spacing: 0.08em;
         text-transform: uppercase;
@@ -650,18 +1050,21 @@
 
       .scenario-chip:hover,
       .scenario-chip:focus-visible {
-        background: rgba(167, 139, 250, 0.14); /* light purple wash */
+      background: rgba(167, 139, 250, 0.14);
+      /* light purple wash */
         border-color: rgba(167, 139, 250, 0.75);
-        color: #a78bfa; /* hover text */
+      color: #a78bfa;
+      /* hover text */
         outline: none;
         box-shadow: 0 6px 20px rgba(167, 139, 250, 0.28);
       }
 
       .scenario-chip.active {
-        background: linear-gradient(135deg, rgba(167,139,250,0.32), rgba(167,139,250,0.18));
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.32), rgba(167, 139, 250, 0.18));
         border-color: rgba(167, 139, 250, 0.85);
-        color: #e9d5ff; /* lighter purple when active */
-        box-shadow: 0 10px 28px rgba(167,139,250,0.32);
+      color: #e9d5ff;
+      /* lighter purple when active */
+      box-shadow: 0 10px 28px rgba(167, 139, 250, 0.32);
       }
 
       .card-controls {
@@ -687,22 +1090,35 @@
       .icon-btn:focus-visible {
         border-color: rgba(14, 165, 233, 0.8);
         color: #0ea5e9;
-        box-shadow: 0 8px 20px rgba(14,165,233,0.35);
+      box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
         outline: none;
       }
 
       /* Inline tooltips */
-      label.has-tip { position: relative; }
-      .label-row { display: inline-flex; align-items: center; gap: 8px; }
-      .info-wrap { position: relative; display: inline-grid; place-items: center; }
+    label.has-tip {
+      position: relative;
+    }
+
+    .label-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-wrap {
+      position: relative;
+      display: inline-grid;
+      place-items: center;
+    }
+
       .info-trigger {
         display: inline-grid;
         place-items: center;
         width: 18px;
         height: 18px;
         border-radius: 999px;
-        border: 1px solid rgba(167,139,250,0.6);
-        background: radial-gradient(120px 120px at 50% -40%, rgba(167,139,250,0.22), transparent 60%), rgba(32, 35, 60, 0.82);
+      border: 1px solid rgba(167, 139, 250, 0.6);
+      background: radial-gradient(120px 120px at 50% -40%, rgba(167, 139, 250, 0.22), transparent 60%), rgba(32, 35, 60, 0.82);
         color: #c4b5fd;
         font-size: 12px;
         line-height: 1;
@@ -710,8 +1126,15 @@
         padding: 0;
         transition: all .18s ease;
       }
+
       .info-trigger:hover,
-      .info-trigger:focus-visible { outline: none; border-color: rgba(167,139,250,0.9); color: #e9d5ff; box-shadow: 0 6px 18px rgba(167,139,250,0.32); }
+    .info-trigger:focus-visible {
+      outline: none;
+      border-color: rgba(167, 139, 250, 0.9);
+      color: #e9d5ff;
+      box-shadow: 0 6px 18px rgba(167, 139, 250, 0.32);
+    }
+
       .info-bubble {
         position: absolute;
         z-index: 50;
@@ -722,20 +1145,43 @@
         max-width: 320px;
         padding: 10px 12px;
         border-radius: 10px;
-        border: 1px solid rgba(167,139,250,0.45);
+      border: 1px solid rgba(167, 139, 250, 0.45);
         background: linear-gradient(135deg, rgba(30, 33, 56, 0.96), rgba(22, 25, 46, 0.98));
         color: #e2e8f0;
-        box-shadow: 0 12px 28px rgba(20, 17, 40, 0.6), 0 0 0 1px rgba(167,139,250,0.12) inset;
+      box-shadow: 0 12px 28px rgba(20, 17, 40, 0.6), 0 0 0 1px rgba(167, 139, 250, 0.12) inset;
         pointer-events: none;
         opacity: 0;
         transition: opacity .18s ease, transform .18s ease;
       }
-      .info-bubble .tip-title { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #c4b5fd; margin: 0 0 6px; }
-      .info-bubble .tip-text { font-size: 12px; color: rgba(226,232,240,0.88); margin: 0; line-height: 1.35; }
-      .info-bubble .tip-range { display:block; margin-top:6px; font-size:12px; color:#e9d5ff; }
+
+    .info-bubble .tip-title {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #c4b5fd;
+      margin: 0 0 6px;
+    }
+
+    .info-bubble .tip-text {
+      font-size: 12px;
+      color: rgba(226, 232, 240, 0.88);
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    .info-bubble .tip-range {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #e9d5ff;
+    }
+
       .info-wrap:hover .info-bubble,
-      .info-trigger:focus + .info-bubble,
-      .info-wrap:focus-within .info-bubble { opacity: 1; pointer-events: auto; }
+    .info-trigger:focus+.info-bubble,
+    .info-wrap:focus-within .info-bubble {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
       input[type="checkbox"] {
         width: 18px;
@@ -764,7 +1210,11 @@
         justify-content: flex-start;
         gap: 10px;
       }
-      .field-group-header .field-group-label { margin: 0; }
+
+    .field-group-header .field-group-label {
+      margin: 0;
+    }
+
       .yesno-toggle {
         display: inline-flex;
         align-items: center;
@@ -774,6 +1224,7 @@
         border: 1px solid rgba(100, 116, 139, 0.35);
         background: rgba(37, 40, 65, 0.6);
       }
+
       .yesno-toggle .yesno-option {
         position: relative;
         display: inline-flex;
@@ -782,6 +1233,7 @@
         cursor: pointer;
         user-select: none;
       }
+
       .yesno-toggle .yesno-option input {
         position: absolute;
         opacity: 0;
@@ -789,6 +1241,7 @@
         height: 0;
         pointer-events: none;
       }
+
       .yesno-toggle .yesno-option span {
         display: inline-block;
         padding: 4px 10px;
@@ -797,13 +1250,14 @@
         color: rgba(226, 232, 240, 0.82);
         border-radius: 9999px;
       }
-      .yesno-toggle .yesno-option input:checked + span {
+
+    .yesno-toggle .yesno-option input:checked+span {
         color: #0ea5e9;
         background: rgba(14, 165, 233, 0.12);
       }
 
       /* Space between the header (question + toggle) and the dependent inputs */
-      [data-openai-component="purchase-details"] .field-group > .grid {
+    [data-openai-component="purchase-details"] .field-group>.grid {
         margin-top: 18px;
       }
 
@@ -975,6 +1429,7 @@
         letter-spacing: -0.02em;
         color: #f1f5f9;
       }
+
       .slide-header {
         position: relative;
         margin: 0;
@@ -994,12 +1449,14 @@
         align-items: center;
         gap: 16px;
       }
+
       .header-actions {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         gap: 4px;
       }
+
       .rate-indicator {
         position: absolute;
         top: 4px;
@@ -1049,22 +1506,39 @@
         background: rgba(71, 85, 105, 0.6);
         border-color: rgba(100, 116, 139, 0.8);
       }
+
       .rate-refresh {
         display: none !important;
       }
-      .rate-refresh:hover { background: rgba(14, 165, 233, 0.18); }
+
+    .rate-refresh:hover {
+      background: rgba(14, 165, 233, 0.18);
+    }
+
       .rate-refresh:focus-visible {
         outline: 2px solid rgba(14, 165, 233, 0.65);
         outline-offset: 2px;
       }
-      .rate-refresh svg { width: 16px; height: 16px; }
+
+    .rate-refresh svg {
+      width: 16px;
+      height: 16px;
+    }
+
       .rate-refresh.is-spinning svg {
         animation: rateRefreshSpin 0.9s linear infinite;
       }
+
       @keyframes rateRefreshSpin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
+      from {
+        transform: rotate(0deg);
       }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
       .rate-badge {
         font-size: 11px;
         letter-spacing: 0.1em;
@@ -1073,24 +1547,47 @@
         padding: 4px 10px;
         border-radius: 999px;
         border: 1px solid rgba(14, 165, 233, 0.35);
-        background: linear-gradient(180deg, rgba(14,165,233,0.18), rgba(14,165,233,0.10));
+      background: linear-gradient(180deg, rgba(14, 165, 233, 0.18), rgba(14, 165, 233, 0.10));
         line-height: 1.6;
         pointer-events: none;
         display: inline-flex;
         align-items: baseline;
         gap: 6px;
-        box-shadow: 0 0 0 1px rgba(14,165,233,0.12) inset, 0 8px 24px rgba(14,165,233,0.12);
-      }
-      .rate-badge .rate-label { color: rgba(14,165,233,0.78); font-weight: 600; letter-spacing: 0.14em; }
-      .rate-badge .rate-num { color: #22d3ee; font-weight: 800; font-size: clamp(16px, 2.4vw, 24px); line-height: 1; letter-spacing: 0.01em; }
+      box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.12) inset, 0 8px 24px rgba(14, 165, 233, 0.12);
+    }
+
+    .rate-badge .rate-label {
+      color: rgba(14, 165, 233, 0.78);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+    }
+
+    .rate-badge .rate-num {
+      color: #22d3ee;
+      font-weight: 800;
+      font-size: clamp(16px, 2.4vw, 24px);
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+
       /* Scale badge down in narrow iframe */
       @media (max-width: 820px) {
-        .rate-badge { padding: 6px 10px; font-size: 10px; }
-        .rate-badge .rate-num { font-size: clamp(14px, 2vw, 20px); }
+      .rate-badge {
+        padding: 6px 10px;
+        font-size: 10px;
       }
+
+      .rate-badge .rate-num {
+        font-size: clamp(14px, 2vw, 20px);
+      }
+    }
+
       @media (max-width: 560px) {
-        .rate-badge { display: none; }
+      .rate-badge {
+        display: none;
       }
+    }
+
       .rate-cta-stack {
         position: absolute;
         right: 0;
@@ -1100,9 +1597,10 @@
         align-items: stretch;
         gap: 8px;
       }
+
       .rate-cta {
-        background: linear-gradient(135deg, rgba(14,165,233,0.18), rgba(14,165,233,0.06));
-        border: 1px solid rgba(14,165,233,0.28);
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.18), rgba(14, 165, 233, 0.06));
+      border: 1px solid rgba(14, 165, 233, 0.28);
         color: rgba(226, 244, 255, 0.9);
         padding: 8px 20px;
         font: inherit;
@@ -1120,24 +1618,26 @@
         gap: 8px;
         line-height: 1.15;
         white-space: nowrap;
-        box-shadow: 0 10px 26px rgba(14,165,233,0.18), 0 0 0 1px rgba(14,165,233,0.08) inset;
+      box-shadow: 0 10px 26px rgba(14, 165, 233, 0.18), 0 0 0 1px rgba(14, 165, 233, 0.08) inset;
         backdrop-filter: blur(6px);
       }
+
       .rate-cta:hover,
       .rate-cta:focus-visible {
         color: #0df9ff;
         border-color: rgba(13, 249, 255, 0.55);
-        background: linear-gradient(135deg, rgba(14,165,233,0.26), rgba(34,211,238,0.12));
-        box-shadow: 0 14px 32px rgba(14,165,233,0.26);
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.26), rgba(34, 211, 238, 0.12));
+      box-shadow: 0 14px 32px rgba(14, 165, 233, 0.26);
         transform: translateY(-1px);
         outline: none;
       }
+
       .rate-cta svg {
         width: 15px;
         height: 15px;
         display: block;
         color: inherit;
-        filter: drop-shadow(0 2px 4px rgba(14,165,233,0.35));
+      filter: drop-shadow(0 2px 4px rgba(14, 165, 233, 0.35));
       }
 
       /* Email modal (overlay) */
@@ -1152,6 +1652,7 @@
         background: rgba(2, 6, 23, 0.66);
         z-index: 9999;
       }
+
       .modal-dialog {
         width: min(420px, 92vw);
         box-sizing: border-box;
@@ -1163,40 +1664,143 @@
         display: grid;
         gap: 12px;
       }
+
       .modal-dialog h3 {
         margin: 0;
         font-size: 16px;
         letter-spacing: -0.01em;
         color: #e2e8f0;
       }
-      .modal-dialog p { margin: 0; color: rgba(148,163,184,0.8); font-size: 13px; }
-      .modal-dialog input[type="email"] { display:block; width: 100%; max-width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(100,116,139,0.35); background: rgba(15,23,42,0.5); color: #e2e8f0; font-size: 14px; }
-      .modal-dialog textarea { display:block; width: 100%; max-width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(100,116,139,0.35); background: rgba(15,23,42,0.5); color: #e2e8f0; font-size: 14px; min-height: 100px; }
-      .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
-      .modal-actions button { background: rgba(37,40,65,0.8); border: 1px solid rgba(100,116,139,0.35); color: rgba(226,232,240,0.92); padding: 8px 12px; font: inherit; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 8px; cursor: pointer; }
-      .modal-actions button.primary { color: #0ea5e9; border-color: rgba(14,165,233,0.5); background: rgba(14,165,233,0.12); }
-      .modal-status { min-height: 18px; font-size: 12px; color: rgba(148,163,184,0.9); }
 
-      .toast-container { position: fixed; right: 16px; bottom: 16px; display: grid; gap: 8px; z-index: 10000; }
-      .toast { display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(100,116,139,0.35); background: rgba(15,23,42,0.92); color: #e2e8f0; font-size: 12px; letter-spacing: 0.02em; opacity: 0; transform: translateY(6px); transition: opacity .2s ease, transform .2s ease; }
-      .toast.show { opacity: 1; transform: translateY(0); }
-      .toast.success { border-color: rgba(16,185,129,0.45); color: #a7f3d0; }
-      .toast.error { border-color: rgba(239,68,68,0.45); color: #fecaca; }
+    .modal-dialog p {
+      margin: 0;
+      color: rgba(148, 163, 184, 0.8);
+      font-size: 13px;
+    }
+
+    .modal-dialog input[type="email"] {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(100, 116, 139, 0.35);
+      background: rgba(15, 23, 42, 0.5);
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .modal-dialog textarea {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(100, 116, 139, 0.35);
+      background: rgba(15, 23, 42, 0.5);
+      color: #e2e8f0;
+      font-size: 14px;
+      min-height: 100px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .modal-actions button {
+      background: rgba(37, 40, 65, 0.8);
+      border: 1px solid rgba(100, 116, 139, 0.35);
+      color: rgba(226, 232, 240, 0.92);
+      padding: 8px 12px;
+      font: inherit;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .modal-actions button.primary {
+      color: #0ea5e9;
+      border-color: rgba(14, 165, 233, 0.5);
+      background: rgba(14, 165, 233, 0.12);
+    }
+
+    .modal-status {
+      min-height: 18px;
+      font-size: 12px;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .toast-container {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      display: grid;
+      gap: 8px;
+      z-index: 10000;
+    }
+
+    .toast {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(100, 116, 139, 0.35);
+      background: rgba(15, 23, 42, 0.92);
+      color: #e2e8f0;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #a7f3d0;
+    }
+
+    .toast.error {
+      border-color: rgba(239, 68, 68, 0.45);
+      color: #fecaca;
+    }
 
 /* Scoped spacing fixes for breakdown slide */
 
-.carousel-slide[data-card="breakdown"] .slide-header h2 { margin: 0; }
+    .carousel-slide[data-card="breakdown"] .slide-header h2 {
+      margin: 0;
+    }
 
-.carousel-slide[data-card="breakdown"] .slide-header p { margin: 0; }
+    .carousel-slide[data-card="breakdown"] .slide-header p {
+      margin: 0;
+    }
 
-.carousel-slide[data-card="breakdown"] .slide-content > .section-block:first-of-type { margin-top: 0 !important; }
+    .carousel-slide[data-card="breakdown"] .slide-content>.section-block:first-of-type {
+      margin-top: 0 !important;
+    }
 
 .carousel-slide[data-card="breakdown"] #breakdownChart,
 
-.carousel-slide[data-card="breakdown"] canvas#breakdownChart { margin-top: 0 !important; }
+    .carousel-slide[data-card="breakdown"] canvas#breakdownChart {
+      margin-top: 0 !important;
+    }
 
       /* Root-cause fix: prevent this slide from stretching to tallest slide height */
-      .carousel-slide[data-card="breakdown"] { align-items: flex-start; }
+    .carousel-slide[data-card="breakdown"] {
+      align-items: flex-start;
+    }
 
       /* Ensure the internal grid packs to the top, no vertical distribution */
       .carousel-slide[data-card="breakdown"] .slide-content.breakdown {
@@ -1208,9 +1812,17 @@
       }
 
       /* Remove any accidental margins on the first content block */
-      .carousel-slide[data-card="breakdown"] .slide-content.breakdown > *:first-child { margin-top: 0 !important; }
-      .carousel-slide[data-card="breakdown"] .breakdown-card { margin-top: 0 !important; }
-      .carousel-slide[data-card="breakdown"] .slide-content.breakdown > * { margin-block-start: 0 !important; }
+    .carousel-slide[data-card="breakdown"] .slide-content.breakdown>*:first-child {
+      margin-top: 0 !important;
+    }
+
+    .carousel-slide[data-card="breakdown"] .breakdown-card {
+      margin-top: 0 !important;
+    }
+
+    .carousel-slide[data-card="breakdown"] .slide-content.breakdown>* {
+      margin-block-start: 0 !important;
+    }
 
       .totals-list {
         display: grid;
@@ -1360,8 +1972,17 @@
         cursor: pointer;
         text-decoration: none;
       }
-      .cta-pill:hover { filter: brightness(1.08); border-color: rgba(52, 211, 153, 0.65); }
-      .cta-pill svg { width: 16px; height: 16px; opacity: 0.9; }
+
+    .cta-pill:hover {
+      filter: brightness(1.08);
+      border-color: rgba(52, 211, 153, 0.65);
+    }
+
+    .cta-pill svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.9;
+    }
 
       .actions {
         display: flex;
@@ -1396,8 +2017,17 @@
       }
 
       /* Push the buttons as a group to the right: first button gets auto margin */
-      #resetBtn { margin-left: auto; }
-      .actions button svg { width: 14px; height: 14px; margin-right: 6px; display: inline-block; vertical-align: middle; }
+    #printBtn {
+      margin-left: auto;
+    }
+
+    .actions button svg {
+      width: 14px;
+      height: 14px;
+      margin-right: 6px;
+      display: inline-block;
+      vertical-align: middle;
+    }
 
       table {
         width: 100%;
@@ -1439,9 +2069,11 @@
         0% {
           box-shadow: 0 0 0 rgba(56, 189, 248, 0);
         }
+
         40% {
           box-shadow: 0 0 48px rgba(56, 189, 248, 0.45);
         }
+
         100% {
           box-shadow: 0 0 0 rgba(56, 189, 248, 0);
         }
@@ -1455,6 +2087,7 @@
         .glow-animate {
           animation: none !important;
         }
+
         .carousel-track,
         .carousel-nav {
           transition: none !important;
@@ -1503,8 +2136,34 @@
           height: 180px;
         }
       }
+
+    @media print {
+
+      .actions,
+      .cta-pill,
+      #showBreakdownBtn,
+      .header-row .button-row {
+        display: none !important;
+      }
+
+      body,
+      .app {
+        background: white !important;
+        color: black !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+      }
+
+      /* Hide scrollbars/overflow issues */
+      body {
+        overflow: visible !important;
+        }
+      }
     </style>
   </head>
+
   <body>
     <div class="app">
       <div id="viewsContainer">
@@ -1513,15 +2172,19 @@
 
 
             <header class="slide-header">
-              <h1>Auto Loan Calculator</h1>
-              <p>Compare loan programs and see monthly costs.<br />Preview payoff timing and adjust the inputs to explore scenarios.</p>
+          <h1>Auto Loan And Lease Calculator</h1>
+          <p>Compare loan and lease programs and see monthly costs.<br />Preview payoff timing and adjust the inputs to explore
+            scenarios.</p>
               <div class="rate-cta-stack">
                 <span class="rate-badge" data-openai-component="rate-badge">
                   <span class="rate-label">TODAY'S AVERAGE RATE</span>
                   <span class="rate-num">5%</span>
                 </span>
                 <button type="button" class="rate-cta" id="notifyRatesBtn" data-openai-component="rate-indicator">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6-6V11a6 6 0 1 0-12 0v5l-2 2v1h16v-1l-2-2Z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor"
+                  d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6-6V11a6 6 0 1 0-12 0v5l-2 2v1h16v-1l-2-2Z" />
+              </svg>
                   <span>Notify me when rates drop</span>
                 </button>
               </div>
@@ -1572,7 +2235,8 @@
           Monthly Payment ($)
           <input type="number" id="monthly_payment" min="0" step="10" />
           <div class="slider-row">
-            <input type="range" id="monthly_payment_slider" min="0" max="2000" step="10" aria-label="Monthly payment" />
+                  <input type="range" id="monthly_payment_slider" min="0" max="2000" step="10"
+                    aria-label="Monthly payment" />
             <span class="slider-value" id="monthly_payment_slider_display">$0</span>
           </div>
         </label>
@@ -1580,7 +2244,8 @@
           Down Payment ($)
           <input type="number" id="down_payment_value" min="0" step="100" />
           <div class="slider-row">
-            <input type="range" id="auto_down_payment_slider" min="0" max="50000" step="100" aria-label="Down payment dollars" />
+                  <input type="range" id="auto_down_payment_slider" min="0" max="50000" step="100"
+                    aria-label="Down payment dollars" />
             <span class="slider-value" id="auto_down_payment_slider_display">$0</span>
           </div>
         </label>
@@ -1663,12 +2328,16 @@
         </div>
 
         <!-- Row 3: Sales Tax + Include taxes checkbox -->
-        <div class="grid duo-columns" id="taxes_fees_row">
-          <label class="percent-field loan-field has-tip">
-            <span class="label-row">Sales Tax (%) <span class="info-wrap"><button type="button" class="info-trigger" aria-label="What is this?" title="What is this?">i</button><div class="info-bubble" role="tooltip">
-              <p class="tip-title">Sales Tax</p>
-              <p class="tip-text">The tax that is imposed by the state or local government. This tax is usually calculated as a percentage of the total purchase price and varies based on location.</p>
-            </div></span></span>
+            <div class="grid duo-columns" id="taxes_fees_row">
+              <label class="percent-field loan-field has-tip">
+                <span class="label-row">Sales Tax (%) <span class="info-wrap"><button type="button" class="info-trigger"
+                      aria-label="What is this?" title="What is this?">i</button>
+                    <div class="info-bubble" role="tooltip">
+                      <p class="tip-title">Sales Tax</p>
+                      <p class="tip-text">The tax that is imposed by the state or local government. This tax is usually
+                        calculated as a percentage of the total purchase price and varies based on location.</p>
+                    </div>
+                  </span></span>
             <input type="number" id="sales_tax_pct" min="0" step="0.01" />
           </label>
           <label class="loan-field checkbox-row" style="align-items:center;">
@@ -1677,14 +2346,19 @@
           </label>
         </div>
 
-        <!-- Row 4: Residual Value (Lease Only) -->
-        <div class="grid duo-columns lease-only-field is-hidden" id="residual_row">
-          <label class="has-tip">
-            <span class="label-row">Residual Value ($) <span class="info-wrap"><button type="button" class="info-trigger" aria-label="What is this?" title="What is this?">i</button><div class="info-bubble" role="tooltip">
-              <p class="tip-title">Residual Value</p>
-              <p class="tip-text">Residual value is an estimation of the worth of the vehicle at the end of the lease period. Financial institutions that issue lease contracts, not the dealers, set residual values on vehicles. Sometimes, it is also called the lease-end value.</p>
-            </div></span></span>
-            <input type="number" id="residual_value" min="0" step="100" />
+            <!-- Row 4: Residual Value (Lease Only) -->
+            <div class="grid duo-columns lease-only-field is-hidden" id="residual_row">
+              <label class="has-tip">
+                <span class="label-row">Residual Value ($) <span class="info-wrap"><button type="button"
+                      class="info-trigger" aria-label="What is this?" title="What is this?">i</button>
+                    <div class="info-bubble" role="tooltip">
+                      <p class="tip-title">Residual Value</p>
+                      <p class="tip-text">Residual value is an estimation of the worth of the vehicle at the end of the
+                        lease period. Financial institutions that issue lease contracts, not the dealers, set residual
+                        values on vehicles. Sometimes, it is also called the lease-end value.</p>
+                    </div>
+                  </span></span>
+                <input type="number" id="residual_value" min="0" step="100" />
           </label>
         </div>
     </div>
@@ -1696,16 +2370,20 @@
       <span class="summary-title"><span class="icon">🚗</span> Trade In Details</span>
     </summary>
     <div class="collapsible-content">
-      <div class="grid duo-columns" id="trade_in_row">
+            <div class="grid duo-columns" id="trade_in_row">
         <label class="loan-field">
           Cash Incentives ($)
           <input type="number" id="cash_incentives" min="0" step="50" />
         </label>
-        <label class="loan-field has-tip">
-          <span class="label-row">Trade-in Value ($) <span class="info-wrap"><button type="button" class="info-trigger" aria-label="What is this?" title="What is this?">i</button><div class="info-bubble" role="tooltip">
-            <p class="tip-title">Trade-in Value</p>
-            <p class="tip-text">The amount that a dealership will offer for your current vehicle when you trade it in as a partial payment towards the vehicle you want to purchase or lease.</p>
-          </div></span></span>
+              <label class="loan-field has-tip">
+                <span class="label-row">Trade-in Value ($) <span class="info-wrap"><button type="button"
+                      class="info-trigger" aria-label="What is this?" title="What is this?">i</button>
+                    <div class="info-bubble" role="tooltip">
+                      <p class="tip-title">Trade-in Value</p>
+                      <p class="tip-text">The amount that a dealership will offer for your current vehicle when you
+                        trade it in as a partial payment towards the vehicle you want to purchase or lease.</p>
+                    </div>
+                  </span></span>
           <input type="number" id="trade_in_value" min="0" step="100" />
         </label>
       </div>
@@ -1747,7 +2425,8 @@
         <input type="number" id="down_payment_value" min="0" step="1000" />
         <span class="field-message" data-field-error="down_payment_value"></span>
         <div class="slider-row">
-          <input type="range" id="down_payment_slider" min="0" max="80" step="1" aria-label="Down payment percent" />
+                <input type="range" id="down_payment_slider" min="0" max="80" step="1"
+                  aria-label="Down payment percent" />
           <span class="slider-value" id="down_payment_slider_display">0%</span>
         </div>
       </label>
@@ -1781,7 +2460,8 @@
                         <label>
                           ZIP code
                           <span class="field-helper">Location for tax estimates</span>
-                          <input type="text" id="zip_code" inputmode="numeric" pattern="\d*" maxlength="9" placeholder="e.g. 94043" />
+                  <input type="text" id="zip_code" inputmode="numeric" pattern="\d*" maxlength="9"
+                    placeholder="e.g. 94043" />
                         </label>
                         <label>
                           Credit score
@@ -1803,29 +2483,41 @@
                       <p class="field-group-label"><span class="icon">📍</span> Property information</p>
                       <div class="grid trio-columns">
                         <label class="percent-field has-tip">
-                          <span class="label-row">Property tax <span class="info-wrap"><button type="button" class="info-trigger" aria-label="What is this?" title="What is this?">i</button><div class="info-bubble" role="tooltip">
+                  <span class="label-row">Property tax <span class="info-wrap"><button type="button"
+                        class="info-trigger" aria-label="What is this?" title="What is this?">i</button>
+                      <div class="info-bubble" role="tooltip">
                             <p class="tip-title">What is this?</p>
-                            <p class="tip-text">Annual property tax as a percent of the assessed home value. Jurisdictions vary widely.</p>
+                        <p class="tip-text">Annual property tax as a percent of the assessed home value. Jurisdictions
+                          vary widely.</p>
                             <span class="tip-range">Typical range: 0.5%–2.5% yearly</span>
-                          </div></span></span>
+                      </div>
+                    </span></span>
                           <span class="field-helper">Annual % of assessed value</span>
                           <input type="number" id="property_tax_input" min="0" step="0.01" />
                         </label>
                         <label class="has-tip">
-                          <span class="label-row">Homeowners insurance <span class="info-wrap"><button type="button" class="info-trigger" aria-label="What is this?" title="What is this?">i</button><div class="info-bubble" role="tooltip">
+                  <span class="label-row">Homeowners insurance <span class="info-wrap"><button type="button"
+                        class="info-trigger" aria-label="What is this?" title="What is this?">i</button>
+                      <div class="info-bubble" role="tooltip">
                             <p class="tip-title">What is this?</p>
-                            <p class="tip-text">Annual premium for hazard insurance that protects your home and belongings.</p>
+                        <p class="tip-text">Annual premium for hazard insurance that protects your home and belongings.
+                        </p>
                             <span class="tip-range">Typical range: $800–$2,500 per year (≈0.2%–0.5% of value)</span>
-                          </div></span></span>
+                      </div>
+                    </span></span>
                           <span class="field-helper">Annual cost in dollars</span>
                           <input type="number" id="homeowners_insurance_yearly" min="0" step="50" />
                         </label>
                         <label class="has-tip">
-                          <span class="label-row">HOA dues <span class="info-wrap"><button type="button" class="info-trigger" aria-label="What is this?" title="What is this?">i</button><div class="info-bubble" role="tooltip">
+                  <span class="label-row">HOA dues <span class="info-wrap"><button type="button" class="info-trigger"
+                        aria-label="What is this?" title="What is this?">i</button>
+                      <div class="info-bubble" role="tooltip">
                             <p class="tip-title">What is this?</p>
-                            <p class="tip-text">Monthly fee charged by a homeowners association for shared services and amenities.</p>
+                        <p class="tip-text">Monthly fee charged by a homeowners association for shared services and
+                          amenities.</p>
                             <span class="tip-range">Typical range: $0–$600 per month (many condos $200–$400)</span>
-                          </div></span></span>
+                      </div>
+                    </span></span>
                           <span class="field-helper">Monthly cost in dollars</span>
                           <input type="number" id="hoa_monthly" min="0" step="10" />
                         </label>
@@ -1836,11 +2528,15 @@
                       <p class="field-group-label"><span class="icon">💳</span> Mortgage insurance & fees</p>
                       <div class="grid trio-columns">
                         <label class="percent-field has-tip">
-                          <span class="label-row">PMI <span class="info-wrap"><button type="button" class="info-trigger" aria-label="What is this?" title="What is this?">i</button><div class="info-bubble" role="tooltip">
+                  <span class="label-row">PMI <span class="info-wrap"><button type="button" class="info-trigger"
+                        aria-label="What is this?" title="What is this?">i</button>
+                      <div class="info-bubble" role="tooltip">
                             <p class="tip-title">What is this?</p>
-                            <p class="tip-text">Private Mortgage Insurance for conventional loans when down payment &lt; 20% (LTV &gt; 80%).</p>
+                        <p class="tip-text">Private Mortgage Insurance for conventional loans when down payment &lt; 20%
+                          (LTV &gt; 80%).</p>
                             <span class="tip-range">Typical range: 0.2%–1.5% of loan balance yearly</span>
-                          </div></span></span>
+                      </div>
+                    </span></span>
                           <span class="field-helper">Annual % (conventional only)</span>
                           <input type="number" id="pmi_pct" min="0" step="0.01" />
                         </label>
@@ -1915,26 +2611,40 @@
                   </div>
 
                   <a class="cta-pill" id="showBreakdownBtn" href="#">See Advanced Calculations
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+            </svg>
                   </a>
                   <div class="actions">
                     <span>Updates automatically as you edit.</span>
+                    <button class="secondary" id="printBtn" type="button" onclick="window.print()"><svg viewBox="0 0 24 24"
+                aria-hidden="true">
+                <path fill="currentColor"
+                  d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z" />
+              </svg>Print</button>
                     <button class="secondary" id="resetBtn" type="button">Reset defaults</button>
-                    <button class="secondary" id="notifyRatesBtnBottom" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6-6V11a6 6 0 1 0-12 0v5l-2 2v1h16v-1l-2-2Z"/></svg>Get notified of rate drops</button>
-                    <button class="secondary" id="feedbackBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 3h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-4 4v-4H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>Feedback</button>
+            <button class="secondary" id="notifyRatesBtnBottom" type="button"><svg viewBox="0 0 24 24"
+                aria-hidden="true">
+                <path fill="currentColor"
+                  d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6-6V11a6 6 0 1 0-12 0v5l-2 2v1h16v-1l-2-2Z" />
+              </svg>Get notified of rate drops</button>
+            <button class="secondary" id="feedbackBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor"
+                  d="M5 3h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-4 4v-4H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+              </svg>Feedback</button>
                   </div>
                 </div>
               </div>
             </div>
             <div class="view-container is-hidden" id="breakdownView">
-            <header>
+      <header class="slide-header">
               <div class="header-row">
-                <h2>Outputs</h2>
+          <h1>Advanced Calculations</h1>
                 <div class="button-row" id="showSummaryBtn">
                   <button type="button" class="cta-button secondary">&larr; Back to Inputs</button>
                 </div>
               </div>
-              <p>Key loan metrics and year-one totals.</p>
+        <p>Loan and lease advanced calculations including <br />monthly payments, vehicle value, and loan amounts.</p>
             </header>
             <div class="section-block">
               <div class="outputs-vertical">
@@ -1955,7 +2665,7 @@
                     </div>
                     <div class="donut-row">
                       <canvas id="expenseDonut"></canvas>
-                      <div class="donut-legend" id="expenseLegend"></div>
+                      <div class="donut-legend schedule-legend" id="expenseLegend"></div>
                     </div>
                     <div class="metrics-table-wrap">
                       <table class="metrics-table">
@@ -1995,40 +2705,52 @@
                 <section class="section-block">
                   <div class="section-title">Loan Totals</div>
                   <div class="grid two-col">
-                    <div class="metric"><span class="label">Sales Tax</span><span class="value" id="out_sales_tax">$0</span></div>
-                    <div class="metric"><span class="label">Upfront Payment</span><span class="value" id="out_upfront_payment">$0</span></div>
-                    <div class="metric"><span class="label">Total of Loan Payments</span><span class="value" id="out_total_payments">$0</span></div>
-                    <div class="metric"><span class="label">Total Loan Interest</span><span class="value" id="out_total_interest">$0</span></div>
-                    <div class="metric"><span class="label">Total Cost (Price + Interest + Tax/Fees)</span><span class="value" id="out_total_cost">$0</span></div>
-                    <div class="metric"><span class="label">Payoff Date</span><span class="value" id="out_payoff_date">—</span></div>
+              <div class="metric"><span class="label">Sales Tax</span><span class="value" id="out_sales_tax">$0</span>
+              </div>
+              <div class="metric"><span class="label">Upfront Payment</span><span class="value"
+                  id="out_upfront_payment">$0</span></div>
+              <div class="metric"><span class="label">Total of Loan Payments</span><span class="value"
+                  id="out_total_payments">$0</span></div>
+              <div class="metric"><span class="label">Total Loan Interest</span><span class="value"
+                  id="out_total_interest">$0</span></div>
+              <div class="metric"><span class="label">Total Cost (Price + Interest + Tax/Fees)</span><span class="value"
+                  id="out_total_cost">$0</span></div>
+              <div class="metric"><span class="label">Payoff Date</span><span class="value"
+                  id="out_payoff_date">—</span></div>
                   </div>
                 </section>
-                <section class="section-block">
+                <section class="section-block section-centered">
                   <div class="section-title">Monthly Schedule (Cumulative)</div>
-                  <div class="breakdown-chart" style="position:relative;">
-                    <canvas id="monthlyScheduleChart"></canvas>
+                  <div class="donut-row">
+                    <div class="breakdown-chart">
+                      <canvas id="monthlyScheduleChart"></canvas>
+                    </div>
+                    <div class="donut-legend schedule-legend" id="monthlyScheduleLegend"></div>
                   </div>
                 </section>
-                <div class="button-row">
-                  <button type="button" class="cta-button secondary" id="showAmortizationBtn">View Year-by-Year Breakdown →</button>
+          <div class="button-row" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;">
+            <button type="button" class="cta-pill" id="backToInputsBtnBottom" style="margin: 0; width: auto;">
+              <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 16px; height: 16px; transform: rotate(180deg);">
+                <path fill="currentColor" d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+              </svg>Go Back to Inputs
+            </button>
+            <button type="button" class="cta-pill" id="showAmortizationBtn" style="margin: 0; width: auto;">
+              View Year-by-Year Breakdown
+              <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 16px; height: 16px;">
+                <path fill="currentColor" d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+              </svg>
+            </button>
                 </div>
               </div>
             </div>
         </div>
         <div class="view-container is-hidden" id="amortizationView">
-            <header>
-              <h2>Breakdown Over Time (Year-by-Year)</h2>
+      <header class="slide-header">
               <div class="header-row">
-                <p>Annual rollup of income, expenses, cash flow, returns, and equity.</p>
-                <div class="header-actions">
-                  <div class="button-row" id="showAmortizationSummaryBtn">
-                    <button type="button" class="cta-button secondary">&larr; Back to Inputs</button>
+          <h1>Breakdown Over Time</h1>
+          <div class="header-actions"></div>
                   </div>
-                  <div class="button-row">
-                    <button type="button" class="cta-button secondary" id="backToBreakdownBtn">&larr; Back to Breakdown</button>
-                  </div>
-                </div>
-              </div>
+        <p>View your interest, principal, and ending balance, over time.</p>
             </header>
             <section class="section-block">
               <table class="yearly-table" id="overTimeTable">
@@ -2043,6 +2765,18 @@
                 <tbody></tbody>
               </table>
             </section>
+      <div class="button-row" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 20px;">
+        <button type="button" class="cta-pill" id="backToInputsBtnSlide3" style="margin: 0; width: auto;">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 16px; height: 16px; transform: rotate(180deg);">
+            <path fill="currentColor" d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+          </svg>Go Back to Inputs
+        </button>
+        <button type="button" class="cta-pill" id="backToBreakdownBtnSlide3" style="margin: 0; width: auto;">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 16px; height: 16px; transform: rotate(180deg);">
+            <path fill="currentColor" d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+          </svg>Back to Breakdown
+        </button>
+      </div>
         </div>
       </div>
 
@@ -2061,7 +2795,7 @@
         let closingEdited = false;
         let rateEdited = false;
         let autoSalesTaxEdited = false; // tracks manual edits to sales_tax_pct
-        let isSettingDefaults = false; // flag to prevent saving defaults as user input during initialization
+      let isSettingDefaults = false; // flag to prevent saving defaults as user input during initialization
 
         const clampNonNegative = (value) => {
           const num = toNumber(value);
@@ -2330,10 +3064,10 @@
             extra_principal_monthly,
             extra_start_month_index,
             pmi_pct,
-            auto_price_computed,
-            calculate_by_payment,
-            is_lease,
-            residual_value,
+          auto_price_computed,
+          calculate_by_payment,
+          is_lease,
+          residual_value,
           } = params;
 
           const baseLoan = compute_base_loan_amount(home_value, down_payment_value, down_payment_pct);
@@ -2405,10 +3139,10 @@
               extra_principal_monthly: clampNonNegative(extra_principal_monthly),
               extra_start_month_index: Math.max(Math.round(toNumber(extra_start_month_index)), 0),
               pmi_pct: pmiPct,
-              auto_price_computed,
-              calculate_by_payment,
-              is_lease,
-              residual_value,
+            auto_price_computed,
+            calculate_by_payment,
+            is_lease,
+            residual_value,
             },
             derived: {
               loan_amount_base: baseLoan.loan_amount_base,
@@ -2511,7 +3245,7 @@
         const baseDefaults = {
           loan_type: "conventional",
           home_value: 450000,
-          down_payment_value: 5000,
+        down_payment_value: 5000,
           rate_apr: 6.75,
           term_years: 30,
           start_month: 2,
@@ -2555,14 +3289,14 @@
           title_fees: 400,
           include_taxes_fees: false,
           state: '',
-          monthly_payment: 500,
-          residual_value: 24000,
+        monthly_payment: 500,
+        residual_value: 24000,
         };
 
         const setAutoDefaultsIfEmpty = (force = false) => {
-          // Prevent saving to local storage while setting defaults
-          isSettingDefaults = true;
-          try {
+        // Prevent saving to local storage while setting defaults
+        isSettingDefaults = true;
+        try {
           const rateFromPill = getRateFromPill();
           if (rateFromPill != null) autoDefaults.interest_rate_pct = rateFromPill;
           const setIfEmpty = (id, val) => {
@@ -2598,23 +3332,23 @@
             } else {
               setIfEmpty('down_payment_value', dpDefault);
             }
-          } catch (_) {}
-          Object.entries(autoDefaults).forEach(([k,v]) => {
+          } catch (_) { }
+          Object.entries(autoDefaults).forEach(([k, v]) => {
             if (k === 'down_payment_value') return;
             setIfEmpty(k, v);
           });
-            
-            // Sync sliders after defaults
-          const dpEl = document.getElementById('down_payment_value');
-            if (dpEl) { try { dpEl.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {} }
-            
-            const mpEl = document.getElementById('monthly_payment');
-            if (mpEl) { try { mpEl.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {} }
 
-            const priceEl = document.getElementById('auto_price');
-            if (priceEl) { try { priceEl.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {} }
-          } finally {
-            isSettingDefaults = false;
+          // Sync sliders after defaults
+          const dpEl = document.getElementById('down_payment_value');
+          if (dpEl) { try { dpEl.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) { } }
+
+          const mpEl = document.getElementById('monthly_payment');
+          if (mpEl) { try { mpEl.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) { } }
+
+          const priceEl = document.getElementById('auto_price');
+          if (priceEl) { try { priceEl.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) { } }
+        } finally {
+          isSettingDefaults = false;
           }
         };
 
@@ -2702,7 +3436,7 @@
               const cc = Math.round(pp * 0.02 / 100) * 100; // round to nearest $100
               closeEl.value = String(cc);
             }
-          } catch(_) {}
+        } catch (_) { }
 
           // Sync loan sliders from inputs if they exist
           if (typeof loanInputsMap !== 'undefined' && typeof loanSlidersMap !== 'undefined' && typeof loanDisplaysMap !== 'undefined') {
@@ -2812,11 +3546,11 @@
           y1_ending_balance_monthly: $("y1_ending_balance_monthly"),
           y1_ending_balance: $("y1_ending_balance"),
           // Loan Totals
-          out_sales_tax: $("out_sales_tax"),
-          out_upfront_payment: $("out_upfront_payment"),
-          out_total_payments: $("out_total_payments"),
+        out_sales_tax: $("out_sales_tax"),
+        out_upfront_payment: $("out_upfront_payment"),
+        out_total_payments: $("out_total_payments"),
           out_total_interest: $("out_total_interest"),
-          out_total_cost: $("out_total_cost"),
+        out_total_cost: $("out_total_cost"),
           out_payoff_date: $("out_payoff_date"),
           // Amortization table body
           overTimeTableBody: (document.querySelector('#overTimeTable tbody')),
@@ -2881,53 +3615,53 @@
           console.debug(`[mortgage-telemetry] ${event}`, detail);
         };
 
-        // --- Frontend error reporting (matches prior projects) ---
-        (() => {
-          const TRACK_ENDPOINTS = [
-            'https://mortgage-calculator-open-ai.onrender.com/api/track',
-            'http://localhost:8000/api/track',
-            '/api/track',
-          ];
-          let lastErrorSignature = '';
-          const reportError = async (payload) => {
-            const signature = JSON.stringify(payload).slice(0, 500);
-            if (signature === lastErrorSignature) return;
-            lastErrorSignature = signature;
-            for (const url of TRACK_ENDPOINTS) {
-              try {
-                await fetch(url, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  mode: 'cors',
-                  body: JSON.stringify({ event: 'frontend_error', data: payload }),
-                });
-                break;
-              } catch (_) {
-                // try next endpoint
-              }
+      // --- Frontend error reporting (matches prior projects) ---
+      (() => {
+        const TRACK_ENDPOINTS = [
+          'https://mortgage-calculator-open-ai.onrender.com/api/track',
+          'http://localhost:8000/api/track',
+          '/api/track',
+        ];
+        let lastErrorSignature = '';
+        const reportError = async (payload) => {
+          const signature = JSON.stringify(payload).slice(0, 500);
+          if (signature === lastErrorSignature) return;
+          lastErrorSignature = signature;
+          for (const url of TRACK_ENDPOINTS) {
+            try {
+              await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                mode: 'cors',
+                body: JSON.stringify({ event: 'frontend_error', data: payload }),
+              });
+              break;
+            } catch (_) {
+              // try next endpoint
             }
-          };
-          window.addEventListener('error', (event) => {
-            if (!event) return;
-            reportError({
-              message: event.message || 'Unknown error',
-              filename: event.filename || '',
-              lineno: event.lineno || 0,
-              colno: event.colno || 0,
-              stack: event.error?.stack || '',
-              userAgent: navigator.userAgent,
-            });
-          }, true);
-          window.addEventListener('unhandledrejection', (event) => {
-            if (!event) return;
-            const reason = event.reason;
-            reportError({
-              message: typeof reason === 'string' ? reason : reason?.message || 'Unhandled rejection',
-              stack: reason?.stack || '',
-              userAgent: navigator.userAgent,
-            });
+          }
+        };
+        window.addEventListener('error', (event) => {
+          if (!event) return;
+          reportError({
+            message: event.message || 'Unknown error',
+            filename: event.filename || '',
+            lineno: event.lineno || 0,
+            colno: event.colno || 0,
+            stack: event.error?.stack || '',
+            userAgent: navigator.userAgent,
           });
-        })();
+        }, true);
+        window.addEventListener('unhandledrejection', (event) => {
+          if (!event) return;
+          const reason = event.reason;
+          reportError({
+            message: typeof reason === 'string' ? reason : reason?.message || 'Unhandled rejection',
+            stack: reason?.stack || '',
+            userAgent: navigator.userAgent,
+          });
+        });
+      })();
 
         // Lightweight toast notifications for success/failure messages
         const getToastContainer = () => {
@@ -3066,7 +3800,7 @@
 
         const readParams = () => {
           // New Auto Loan inputs
-          let price = toNumber(document.getElementById('auto_price')?.value || 0);
+        let price = toNumber(document.getElementById('auto_price')?.value || 0);
           const rateRaw = toNumber(document.getElementById('interest_rate_pct')?.value || 0);
           const termMonths = Math.max(1, Math.round(toNumber(document.getElementById('loan_term_months')?.value || 60)));
           const downPayment = Math.max(0, toNumber(document.getElementById('down_payment_value')?.value || 0));
@@ -3075,56 +3809,56 @@
           const tradeOwed = Math.max(0, toNumber(document.getElementById('trade_in_owed')?.value || 0));
           const salesTaxPct = Math.max(0, toNumber(document.getElementById('sales_tax_pct')?.value || 0));
           const titleFees = Math.max(0, toNumber(document.getElementById('title_fees')?.value || 0));
-          const includeTaxesFees = Boolean((document.getElementById('include_taxes_fees')||{}).checked);
+        const includeTaxesFees = Boolean((document.getElementById('include_taxes_fees') || {}).checked);
           const loanRadio = document.getElementById('purchase_type_loan');
           const usingLoan = !!(loanRadio && loanRadio.checked);
-          const isLease = !usingLoan;
-          
-          const calculateByPayment = !!document.getElementById('calculate_by_payment')?.checked;
-          const monthlyPaymentInput = toNumber(document.getElementById('monthly_payment')?.value || 0);
-          const residualValue = toNumber(document.getElementById('residual_value')?.value || 0);
+        const isLease = !usingLoan;
 
-          // Map into existing calculation fields
-          // Accept either percent (e.g., 5) or decimal (e.g., 0.05)
-          const rateAprDec = (rateRaw > 1 ? rateRaw / 100 : rateRaw);
-          const termYears = Math.max(0.1, termMonths / 12);
+        const calculateByPayment = !!document.getElementById('calculate_by_payment')?.checked;
+        const monthlyPaymentInput = toNumber(document.getElementById('monthly_payment')?.value || 0);
+        const residualValue = toNumber(document.getElementById('residual_value')?.value || 0);
 
-          if (calculateByPayment && usingLoan) {
-             // ... existing reverse loan logic ...
-             const n = termMonths;
-             const r = rateAprDec / 12;
-             let principal = 0;
-             if (r === 0) {
-                 principal = monthlyPaymentInput * n;
-             } else {
-                 const f = Math.pow(1 + r, n);
-                 principal = monthlyPaymentInput * (f - 1) / (r * f);
-             }
-             
-             const taxRate = salesTaxPct / 100;
-             const effTaxRate = includeTaxesFees ? taxRate : 0;
-             const effFees = includeTaxesFees ? titleFees : 0;
-             const effTaxDeduction = includeTaxesFees ? (taxRate * (incentives + tradeValue)) : 0;
-             
-             const numerator = principal + incentives + downPayment + tradeValue - tradeOwed + effTaxDeduction - effFees;
-             price = Math.max(0, numerator / (1 + effTaxRate));
-          } else if (calculateByPayment && isLease) {
-             const totalMonthly = monthlyPaymentInput;
-             const taxRate = salesTaxPct / 100;
-             const baseMonthly = totalMonthly / (1 + taxRate); // strip monthly tax
-             const term = termMonths;
-             const moneyFactor = (rateAprDec * 100) / 2400; // APR -> money factor
-             const depreciationFactor = 1 / term;
-             const rentFactor = moneyFactor;
+        // Map into existing calculation fields
+        // Accept either percent (e.g., 5) or decimal (e.g., 0.05)
+        const rateAprDec = (rateRaw > 1 ? rateRaw / 100 : rateRaw);
+        const termYears = Math.max(0.1, termMonths / 12);
 
-             const numerator = baseMonthly - residualValue * (rentFactor - depreciationFactor);
-             const denom = depreciationFactor + rentFactor;
-             const adjCapCost = numerator / denom;
-
-             const netTrade = tradeValue - tradeOwed;
-             const capReductions = downPayment + Math.max(0, netTrade) + incentives;
-             price = Math.max(0, adjCapCost + capReductions);
+        if (calculateByPayment && usingLoan) {
+          // ... existing reverse loan logic ...
+          const n = termMonths;
+          const r = rateAprDec / 12;
+          let principal = 0;
+          if (r === 0) {
+            principal = monthlyPaymentInput * n;
+          } else {
+            const f = Math.pow(1 + r, n);
+            principal = monthlyPaymentInput * (f - 1) / (r * f);
           }
+
+          const taxRate = salesTaxPct / 100;
+          const effTaxRate = includeTaxesFees ? taxRate : 0;
+          const effFees = includeTaxesFees ? titleFees : 0;
+          const effTaxDeduction = includeTaxesFees ? (taxRate * (incentives + tradeValue)) : 0;
+
+          const numerator = principal + incentives + downPayment + tradeValue - tradeOwed + effTaxDeduction - effFees;
+          price = Math.max(0, numerator / (1 + effTaxRate));
+        } else if (calculateByPayment && isLease) {
+          const totalMonthly = monthlyPaymentInput;
+          const taxRate = salesTaxPct / 100;
+          const baseMonthly = totalMonthly / (1 + taxRate); // strip monthly tax
+          const term = termMonths;
+          const moneyFactor = (rateAprDec * 100) / 2400; // APR -> money factor
+          const depreciationFactor = 1 / term;
+          const rentFactor = moneyFactor;
+
+          const numerator = baseMonthly - residualValue * (rentFactor - depreciationFactor);
+          const denom = depreciationFactor + rentFactor;
+          const adjCapCost = numerator / denom;
+
+          const netTrade = tradeValue - tradeOwed;
+          const capReductions = downPayment + Math.max(0, netTrade) + incentives;
+          price = Math.max(0, adjCapCost + capReductions);
+        }
 
           // Compute financed principal according to auto rules
           const priceAfterIncentives = Math.max(0, price - incentives);
@@ -3138,10 +3872,10 @@
           return {
             loan_type: 'conventional',
             home_value: principal, // treat principal as home_value to reuse engine
-            auto_price_computed: price, // pass computed price for UI
-            calculate_by_payment: calculateByPayment,
-            is_lease: isLease,
-            residual_value: residualValue,
+          auto_price_computed: price, // pass computed price for UI
+          calculate_by_payment: calculateByPayment,
+          is_lease: isLease,
+          residual_value: residualValue,
             down_payment_value: 0,
             down_payment_pct: 0,
             rate_apr: rateAprDec,
@@ -3161,14 +3895,14 @@
         };
 
         const readRentalInputs = () => {
-          const rent = toNumber((document.getElementById('monthly_rent')||{}).value);
-          const other = toNumber((document.getElementById('other_monthly_income')||{}).value);
-          const vacPct = toNumber((document.getElementById('vacancy_rate_pct')||{}).value) / 100;
-          const taxAnnual = toNumber((document.getElementById('exp_property_tax_annual')||{}).value);
-          const insAnnual = toNumber((document.getElementById('exp_insurance_annual')||{}).value);
-          const hoaAnnual = toNumber((document.getElementById('exp_hoa_annual')||{}).value);
-          const maintAnnual = toNumber((document.getElementById('exp_maintenance_annual')||{}).value);
-          const otherAnnual = toNumber((document.getElementById('exp_other_annual')||{}).value);
+        const rent = toNumber((document.getElementById('monthly_rent') || {}).value);
+        const other = toNumber((document.getElementById('other_monthly_income') || {}).value);
+        const vacPct = toNumber((document.getElementById('vacancy_rate_pct') || {}).value) / 100;
+        const taxAnnual = toNumber((document.getElementById('exp_property_tax_annual') || {}).value);
+        const insAnnual = toNumber((document.getElementById('exp_insurance_annual') || {}).value);
+        const hoaAnnual = toNumber((document.getElementById('exp_hoa_annual') || {}).value);
+        const maintAnnual = toNumber((document.getElementById('exp_maintenance_annual') || {}).value);
+        const otherAnnual = toNumber((document.getElementById('exp_other_annual') || {}).value);
           const useLoanYes = document.getElementById('use_loan_yes');
           const usingLoan = !!(useLoanYes && useLoanYes.checked);
 
@@ -3180,7 +3914,7 @@
           denominator === 0 ? 0 : numerator / denominator;
 
         const renderSummary = (calc) => {
-          const { derived, totals, payoff_date, inputs } = calc;
+        const { derived, totals, payoff_date, inputs } = calc;
           const payment = derived.p_and_i || 0;
           const principal0 = derived.principal_0 || 0;
           const months = calc.schedule.length || 0;
@@ -3189,46 +3923,46 @@
           const safeSet = (el, val) => { if (el) el.textContent = val; };
 
           // Overview card
-          if (inputs.calculate_by_payment) {
-            // Reverse mode: Show Vehicle Cost (Price)
-            if (monthlyPaymentCard) {
-              const topLabel = monthlyPaymentCard.querySelector('.split-col:first-child .label');
-              if (topLabel) topLabel.textContent = 'Vehicle Price';
-            }
-            safeSet(outputs.year1_income_value, formatCurrency(inputs.auto_price_computed || 0));
-            safeSet(outputs.year1_income_monthly_sub, '');
-          } else {
-            // Normal mode: Show Monthly Payment
-            if (monthlyPaymentCard) {
-              const topLabel = monthlyPaymentCard.querySelector('.split-col:first-child .label');
-              if (topLabel) topLabel.textContent = inputs.is_lease ? 'Monthly Payment (Lease)' : 'Monthly Payment (P&I)';
-            }
+        if (inputs.calculate_by_payment) {
+          // Reverse mode: Show Vehicle Cost (Price)
+          if (monthlyPaymentCard) {
+            const topLabel = monthlyPaymentCard.querySelector('.split-col:first-child .label');
+            if (topLabel) topLabel.textContent = 'Vehicle Price';
+          }
+          safeSet(outputs.year1_income_value, formatCurrency(inputs.auto_price_computed || 0));
+          safeSet(outputs.year1_income_monthly_sub, '');
+        } else {
+          // Normal mode: Show Monthly Payment
+          if (monthlyPaymentCard) {
+            const topLabel = monthlyPaymentCard.querySelector('.split-col:first-child .label');
+            if (topLabel) topLabel.textContent = inputs.is_lease ? 'Monthly Payment (Lease)' : 'Monthly Payment (P&I)';
+          }
           safeSet(outputs.year1_income_value, formatCurrency(payment));
           safeSet(outputs.year1_income_monthly_sub, '/mo');
-          }
+        }
 
-          if (inputs.is_lease) {
-             // LEASE MODE Adjustments for Summary Card
-             // Secondary metric: Adjusted Cap Cost
-             if (monthlyPaymentCard) {
-                const bottomLabel = monthlyPaymentCard.querySelector('.split-col:last-child .label');
-                const bottomHint = monthlyPaymentCard.querySelector('.split-col:last-child .hint');
-                if (bottomLabel) bottomLabel.textContent = 'Adjusted Cap Cost';
-                if (bottomHint) bottomHint.textContent = 'Net capitalized cost';
-             }
-             safeSet(outputs.year1_cashflow_value, formatCurrency(principal0)); // principal0 is reused for AdjCapCost in lease
-             safeSet(outputs.year1_cashflow_monthly_sub, '');
-          } else {
-             // LOAN MODE Adjustments
-             if (monthlyPaymentCard) {
-                const bottomLabel = monthlyPaymentCard.querySelector('.split-col:last-child .label');
-                const bottomHint = monthlyPaymentCard.querySelector('.split-col:last-child .hint');
-                if (bottomLabel) bottomLabel.textContent = 'Loan Amount';
-                if (bottomHint) bottomHint.textContent = 'Principal financed at origination';
-             }
+        if (inputs.is_lease) {
+          // LEASE MODE Adjustments for Summary Card
+          // Secondary metric: Adjusted Cap Cost
+          if (monthlyPaymentCard) {
+            const bottomLabel = monthlyPaymentCard.querySelector('.split-col:last-child .label');
+            const bottomHint = monthlyPaymentCard.querySelector('.split-col:last-child .hint');
+            if (bottomLabel) bottomLabel.textContent = 'Adjusted Cap Cost';
+            if (bottomHint) bottomHint.textContent = 'Net capitalized cost';
+          }
+          safeSet(outputs.year1_cashflow_value, formatCurrency(principal0)); // principal0 is reused for AdjCapCost in lease
+          safeSet(outputs.year1_cashflow_monthly_sub, '');
+        } else {
+          // LOAN MODE Adjustments
+          if (monthlyPaymentCard) {
+            const bottomLabel = monthlyPaymentCard.querySelector('.split-col:last-child .label');
+            const bottomHint = monthlyPaymentCard.querySelector('.split-col:last-child .hint');
+            if (bottomLabel) bottomLabel.textContent = 'Loan Amount';
+            if (bottomHint) bottomHint.textContent = 'Principal financed at origination';
+          }
           safeSet(outputs.year1_cashflow_value, formatCurrency(principal0));
           safeSet(outputs.year1_cashflow_monthly_sub, payoffLabel);
-          }
+        }
 
           if (monthlyPaymentCard) {
             monthlyPaymentCard.classList.remove('glow-animate');
@@ -3236,67 +3970,67 @@
             monthlyPaymentCard.classList.add('glow-animate');
           }
 
-          // KPIs on Outputs slide (Slide 2)
-          const kpiLabel1 = document.querySelector('.kpi-item:first-child .kpi-label');
-          if (inputs.calculate_by_payment) {
-            // Reverse mode: Show Vehicle Cost (Price) as primary
-            if (kpiLabel1) kpiLabel1.textContent = 'Vehicle Cost';
-            safeSet(outputs.kpi_cashflow_annual, formatCurrency(inputs.auto_price_computed || 0));
-            safeSet(outputs.kpi_cashflow_monthly, '');
-          } else {
-            // Normal mode: Show Monthly Payment
-            if (kpiLabel1) kpiLabel1.textContent = inputs.is_lease ? 'Monthly Lease Payment' : 'Monthly Payment';
+        // KPIs on Outputs slide (Slide 2)
+        const kpiLabel1 = document.querySelector('.kpi-item:first-child .kpi-label');
+        if (inputs.calculate_by_payment) {
+          // Reverse mode: Show Vehicle Cost (Price) as primary
+          if (kpiLabel1) kpiLabel1.textContent = 'Vehicle Cost';
+          safeSet(outputs.kpi_cashflow_annual, formatCurrency(inputs.auto_price_computed || 0));
+          safeSet(outputs.kpi_cashflow_monthly, '');
+        } else {
+          // Normal mode: Show Monthly Payment
+          if (kpiLabel1) kpiLabel1.textContent = inputs.is_lease ? 'Monthly Lease Payment' : 'Monthly Payment';
           safeSet(outputs.kpi_cashflow_annual, formatCurrency(payment));
           safeSet(outputs.kpi_cashflow_monthly, '/mo');
-          }
+        }
 
-          // Second KPI: Loan Amount / Adj Cap Cost
-          const kpiLabel2 = document.querySelector('.kpi-item:last-child .kpi-label');
-          if (kpiLabel2) kpiLabel2.textContent = inputs.is_lease ? 'Adjusted Cap Cost' : 'Loan Amount';
+        // Second KPI: Loan Amount / Adj Cap Cost
+        const kpiLabel2 = document.querySelector('.kpi-item:last-child .kpi-label');
+        if (kpiLabel2) kpiLabel2.textContent = inputs.is_lease ? 'Adjusted Cap Cost' : 'Loan Amount';
           safeSet(outputs.kpi_income_annual, formatCurrency(principal0));
-          safeSet(outputs.kpi_income_monthly, inputs.is_lease ? '' : `${months}`);
+        safeSet(outputs.kpi_income_monthly, inputs.is_lease ? '' : `${months}`);
 
-          // --- SLIDE 2 SECTIONS VISIBILITY ---
-          // Hide/Show P&I Section (Donut + Table)
-          const piSection = document.querySelector('.year1-grid');
-          if (piSection) {
-             const donutRow = piSection.querySelector('.donut-row');
-             const tableWrap = piSection.querySelector('.metrics-table-wrap');
-             // Toggle display property directly to ensure visibility changes
-             if (donutRow) donutRow.style.display = inputs.is_lease ? 'none' : '';
-             if (tableWrap) tableWrap.style.display = inputs.is_lease ? 'none' : '';
-          }
+        // --- SLIDE 2 SECTIONS VISIBILITY ---
+        // Hide/Show P&I Section (Donut + Table)
+        const piSection = document.querySelector('.year1-grid');
+        if (piSection) {
+          const donutRow = piSection.querySelector('.donut-row');
+          const tableWrap = piSection.querySelector('.metrics-table-wrap');
+          // Toggle display property directly to ensure visibility changes
+          if (donutRow) donutRow.style.display = inputs.is_lease ? 'none' : '';
+          if (tableWrap) tableWrap.style.display = inputs.is_lease ? 'none' : '';
+        }
 
-          // Hide/Show Monthly Schedule Section
-          const scheduleSection = document.querySelector('.outputs-vertical section:has(#monthlyScheduleChart)') || document.getElementById('monthlyScheduleChart')?.closest('section');
-          if (scheduleSection) {
-             scheduleSection.style.display = inputs.is_lease ? 'none' : '';
-          }
+        // Hide/Show Monthly Schedule Section
+        const scheduleSection = document.querySelector('.outputs-vertical section:has(#monthlyScheduleChart)') || document.getElementById('monthlyScheduleChart')?.closest('section');
+        if (scheduleSection) {
+          scheduleSection.style.display = inputs.is_lease ? 'none' : '';
+        }
 
-          // Loan/Lease Totals Section Rename and Populate
-          const totalsSection = document.getElementById('out_total_cost')?.closest('section');
-          
-          if (totalsSection) {
-             const title = totalsSection.querySelector('.section-title');
-             if (title) title.textContent = inputs.is_lease ? 'Auto Lease Totals' : 'Loan Totals';
-             
-             if (inputs.is_lease) {
-                // LEASE TOTALS Logic
-                const dep = derived.depreciation_monthly || 0;
-                const rent = derived.rent_charge_monthly || 0;
-                const tax = derived.tax_monthly || 0;
-                const down = toNumber(document.getElementById('down_payment_value')?.value || 0);
-                const upfrontTax = derived.upfront_tax || 0; 
-                const residualTax = derived.residual_tax || 0;
-                const term = inputs.term_years * 12;
-                const totalPayments = payment * term;
-                // Total Cost to Own = Total Lease Payments + Down + Upfront Tax + Residual + Tax on Residual
-                const totalCostOwn = totalPayments + down + upfrontTax + inputs.residual_value + residualTax; 
-                
-                // Reconstruct grid for Lease
-                const grid = totalsSection.querySelector('.grid');
-                if (grid) {
-                   grid.innerHTML = `
+        // Loan/Lease Totals Section Rename and Populate
+        const totalsSection = document.getElementById('out_total_cost')?.closest('section');
+
+        if (totalsSection) {
+          const title = totalsSection.querySelector('.section-title');
+          if (title) title.textContent = inputs.is_lease ? 'Auto Lease Totals' : 'Loan Totals';
+
+          if (inputs.is_lease) {
+            // LEASE TOTALS Logic
+            const dep = derived.depreciation_monthly || 0;
+            const rent = derived.rent_charge_monthly || 0;
+            const tax = derived.tax_monthly || 0;
+            const down = toNumber(document.getElementById('down_payment_value')?.value || 0);
+            const upfrontTax = derived.upfront_tax || 0;
+            const residualTax = derived.residual_tax || 0;
+            const term = inputs.term_years * 12;
+            const totalPayments = payment * term;
+            // Total Cost to Own = Total Lease Payments + Down + Upfront Tax + Residual + Tax on Residual
+            const totalCostOwn = totalPayments + down + upfrontTax + inputs.residual_value + residualTax;
+
+            // Reconstruct grid for Lease
+            const grid = totalsSection.querySelector('.grid');
+            if (grid) {
+              grid.innerHTML = `
                      <div class="metric"><span class="label">Monthly Depreciation</span><span class="value">${formatCurrency(dep)}</span></div>
                      <div class="metric"><span class="label">Monthly Interest</span><span class="value">${formatCurrency(rent)}</span></div>
                      <div class="metric"><span class="label">Monthly Tax</span><span class="value">${formatCurrency(tax)}</span></div>
@@ -3305,41 +4039,41 @@
                      <div class="metric"><span class="label">Total ${term} Lease Payments</span><span class="value">${formatCurrency(totalPayments)}</span></div>
                      <div class="metric full-width"><span class="label">Total Cost to Own After Lease Ends</span><span class="value">${formatCurrency(totalCostOwn)}</span></div>
                    `;
-                   grid.classList.remove('two-col');
-                   grid.style.display = 'grid';
-                   grid.style.gridTemplateColumns = '1fr 1fr';
-                   grid.style.gap = '16px';
-                   // Add custom style for full-width last item
-                   const full = grid.querySelector('.full-width');
-                   if (full) full.style.gridColumn = '1 / -1';
-                }
-             } else {
-                // LOAN TOTALS Logic (Restore original structure)
-                const price = inputs.auto_price_computed || 0;
-                const incentives = toNumber(document.getElementById('cash_incentives')?.value || 0);
-                const tradeValue = toNumber(document.getElementById('trade_in_value')?.value || 0);
-                const tradeOwed = toNumber(document.getElementById('trade_in_owed')?.value || 0);
-                const salesTaxPct = toNumber(document.getElementById('sales_tax_pct')?.value || 0);
-                const titleFees = toNumber(document.getElementById('title_fees')?.value || 0);
-                
-                const priceAfterIncentives = Math.max(0, price - incentives);
-                const taxableBase = Math.max(0, priceAfterIncentives - Math.max(0, tradeValue));
-                const salesTaxAmount = (salesTaxPct / 100) * taxableBase;
-                
-                const downPayment = toNumber(document.getElementById('down_payment_value')?.value || 0);
-                const includeTaxesFees = (document.getElementById('include_taxes_fees')||{}).checked;
-                let upfront = downPayment;
-                if (!includeTaxesFees) {
-                   upfront += salesTaxAmount + titleFees;
-                }
-                
-                const totalLoanPayments = totals.payments; 
-                const totalInterest = totals.interest;
-                const totalCost = price + totalInterest + salesTaxAmount + titleFees; 
+              grid.classList.remove('two-col');
+              grid.style.display = 'grid';
+              grid.style.gridTemplateColumns = '1fr 1fr';
+              grid.style.gap = '16px';
+              // Add custom style for full-width last item
+              const full = grid.querySelector('.full-width');
+              if (full) full.style.gridColumn = '1 / -1';
+            }
+          } else {
+            // LOAN TOTALS Logic (Restore original structure)
+            const price = inputs.auto_price_computed || 0;
+            const incentives = toNumber(document.getElementById('cash_incentives')?.value || 0);
+            const tradeValue = toNumber(document.getElementById('trade_in_value')?.value || 0);
+            const tradeOwed = toNumber(document.getElementById('trade_in_owed')?.value || 0);
+            const salesTaxPct = toNumber(document.getElementById('sales_tax_pct')?.value || 0);
+            const titleFees = toNumber(document.getElementById('title_fees')?.value || 0);
 
-                const grid = totalsSection.querySelector('.grid');
-                if (grid && (!grid.querySelector('#out_sales_tax') || grid.textContent.includes('Depreciation'))) {
-                   grid.innerHTML = `
+            const priceAfterIncentives = Math.max(0, price - incentives);
+            const taxableBase = Math.max(0, priceAfterIncentives - Math.max(0, tradeValue));
+            const salesTaxAmount = (salesTaxPct / 100) * taxableBase;
+
+            const downPayment = toNumber(document.getElementById('down_payment_value')?.value || 0);
+            const includeTaxesFees = (document.getElementById('include_taxes_fees') || {}).checked;
+            let upfront = downPayment;
+            if (!includeTaxesFees) {
+              upfront += salesTaxAmount + titleFees;
+            }
+
+            const totalLoanPayments = totals.payments;
+            const totalInterest = totals.interest;
+            const totalCost = price + totalInterest + salesTaxAmount + titleFees;
+
+            const grid = totalsSection.querySelector('.grid');
+            if (grid && (!grid.querySelector('#out_sales_tax') || grid.textContent.includes('Depreciation'))) {
+              grid.innerHTML = `
                     <div class="metric"><span class="label">Sales Tax</span><span class="value" id="out_sales_tax">${formatCurrency(salesTaxAmount)}</span></div>
                     <div class="metric"><span class="label">Upfront Payment</span><span class="value" id="out_upfront_payment">${formatCurrency(upfront)}</span></div>
                     <div class="metric"><span class="label">Total of Loan Payments</span><span class="value" id="out_total_payments">${formatCurrency(totalLoanPayments)}</span></div>
@@ -3347,20 +4081,20 @@
                     <div class="metric"><span class="label">Total Cost (Price + Interest + Tax/Fees)</span><span class="value" id="out_total_cost">${formatCurrency(totalCost)}</span></div>
                     <div class="metric"><span class="label">Payoff Date</span><span class="value" id="out_payoff_date">${payoffLabel}</span></div>
                    `;
-                   grid.classList.add('two-col');
-                   grid.style.display = ''; 
-                   grid.style.gridTemplateColumns = '';
-                   grid.style.gap = '';
-                } else {
-                   safeSet(outputs.out_sales_tax, formatCurrency(salesTaxAmount));
-                   safeSet(outputs.out_upfront_payment, formatCurrency(upfront));
-                   safeSet(outputs.out_total_payments, formatCurrency(totalLoanPayments));
-                   safeSet(outputs.out_total_interest, formatCurrency(totalInterest));
-                   safeSet(outputs.out_total_cost, formatCurrency(totalCost));
-                   safeSet(outputs.out_payoff_date, payoffLabel);
-                }
-             }
+              grid.classList.add('two-col');
+              grid.style.display = '';
+              grid.style.gridTemplateColumns = '';
+              grid.style.gap = '';
+            } else {
+              safeSet(outputs.out_sales_tax, formatCurrency(salesTaxAmount));
+              safeSet(outputs.out_upfront_payment, formatCurrency(upfront));
+              safeSet(outputs.out_total_payments, formatCurrency(totalLoanPayments));
+              safeSet(outputs.out_total_interest, formatCurrency(totalInterest));
+              safeSet(outputs.out_total_cost, formatCurrency(totalCost));
+              safeSet(outputs.out_payoff_date, payoffLabel);
+            }
           }
+        }
 
           // Year 1 aggregates from schedule
           const y1 = calc.schedule.slice(0, 12);
@@ -3585,14 +4319,21 @@
           if (legend) {
             legend.innerHTML = labels.map((l, i) => {
               const pct = (data[i] / total) * 100;
-              return `<div class="legend-item"><span class="swatch" style="background:${colors[i]}"></span><span class="name">${l}</span><span class="pct">${pct.toFixed(1)}%</span></div>`;
+              return `<div class="legend-item">
+                <span class="swatch" style="background:${colors[i]}"></span>
+                <div class="legend-text">
+                  <strong>${l}</strong>
+                  <span class="legend-desc">${pct.toFixed(1)}% of total payments</span>
+                </div>
+              </div>`;
             }).join('');
           }
         };
 
         const renderMonthlyScheduleChart = (calc) => {
           const canvas = outputs.monthlyScheduleChart;
-          if (!canvas) return;
+          const legendEl = document.getElementById('monthlyScheduleLegend');
+          if (!canvas || !legendEl) return;
           const sched = calc.schedule || [];
           const months = sched.length;
           // Build cumulative series
@@ -3630,15 +4371,15 @@
           const plotW = w - padL - padR;
           const plotH = h - padT - padB;
           const maxY = Math.max(
-            paySeries[months-1] || 0,
-            intSeries[months-1] || 0,
+          paySeries[months - 1] || 0,
+          intSeries[months - 1] || 0,
             calc.derived?.principal_0 || 0
           ) * 1.05;
           const toX = (i) => padL + (months <= 1 ? 0 : (i / (months - 1)) * plotW);
           const toY = (v) => padT + (plotH * (1 - (v / (maxY || 1))));
 
           // helpers
-          const drawSeries = (vals, color, width=2) => {
+        const drawSeries = (vals, color, width = 2) => {
             if (!vals.length) return;
             ctx.beginPath();
             ctx.lineWidth = width;
@@ -3665,21 +4406,19 @@
 
           // Simple legend
           const labels = [
-            { name: 'Payment', color: '#ea580c' },
-            { name: 'Interest', color: '#16a34a' },
-            { name: 'Balance', color: '#60a5fa' },
+            { name: 'Payment', color: '#ea580c', description: 'Cumulative principal + interest paid' },
+            { name: 'Interest', color: '#16a34a', description: 'Interest paid over time' },
+            { name: 'Balance', color: '#60a5fa', description: 'Remaining loan balance' },
           ];
-          const lw = 18, lh = 10, gap = 10;
-          let lx = padL, ly = h - padB + 8;
-          ctx.font = '12px system-ui, -apple-system, Segoe UI, sans-serif';
-          ctx.textBaseline = 'middle';
-          labels.forEach(({name, color}) => {
-            ctx.fillStyle = color;
-            ctx.fillRect(lx, ly - lh/2, lw, lh);
-            ctx.fillStyle = 'rgba(226,232,240,0.9)';
-            ctx.fillText(name, lx + lw + 6, ly);
-            lx += lw + ctx.measureText(name).width + gap + 12;
-          });
+          legendEl.innerHTML = labels.map(({ name, color, description }) => `
+            <div class="legend-item">
+              <span class="swatch" style="background:${color};"></span>
+              <div class="legend-text">
+                <strong>${name}</strong>
+                <span class="legend-desc">${description}</span>
+              </div>
+            </div>
+          `).join('');
         };
 
         const breakdownInputs = {
@@ -3862,72 +4601,72 @@
           console.log('[DEBUG] Reading params...');
           const params = readParams();
           console.log('[DEBUG] Params:', params);
-          
-          let calc;
-          
-          // Lease Calculation Logic
-          if (params.is_lease) {
-             // Inputs
-             const price = params.auto_price_computed;
-             const down = toNumber(document.getElementById('down_payment_value')?.value || 0);
-             const tradeVal = toNumber(document.getElementById('trade_in_value')?.value || 0);
-             const tradeOwed = toNumber(document.getElementById('trade_in_owed')?.value || 0);
-             const incentives = toNumber(document.getElementById('cash_incentives')?.value || 0);
-             const taxPct = toNumber(document.getElementById('sales_tax_pct')?.value || 0);
-             // const titleFees = toNumber(document.getElementById('title_fees')?.value || 0); // Fees usually upfront in simple calc
-             const residual = params.residual_value;
-             const termMonths = Math.max(1, Math.round(toNumber(document.getElementById('loan_term_months')?.value || 36)));
-             const rate = params.rate_apr * 100; // rate_apr is decimal in params (e.g. 0.05), we need percent (5) for MF calc logic or stick to decimal?
-             // Actually, readParams converts rateRaw to decimal (0.05).
-             // Money Factor = APR / 2400 (where APR is percent, e.g. 5). Or APR_decimal / 24.
-             const moneyFactor = (params.rate_apr * 100) / 2400; 
-             
-             // Adjusted Cap Cost
-             const netTrade = tradeVal - tradeOwed;
-             const capReductions = down + netTrade + incentives;
-             const adjCapCost = Math.max(0, price - capReductions);
-             
-             // Depreciation Fee
-             const depreciation = Math.max(0, (adjCapCost - residual) / termMonths);
-             
-             // Finance Fee (Rent Charge)
-             const financeFee = (adjCapCost + residual) * moneyFactor;
-             
-             // Base Monthly
-             const baseMonthly = depreciation + financeFee;
-             
-             // Monthly Tax
-             // Reference logic: Tax on Monthly Payment stream AND Tax on Down Payment upfront.
-             const monthlyTax = baseMonthly * (taxPct / 100);
-             
-             const totalMonthly = baseMonthly + monthlyTax;
-             
-             // Upfront Tax on Down Payment (Capitalized Cost Reduction)
-             // Matching reference: Down * TaxRate
-             const upfrontTax = down * (taxPct / 100);
 
-             // Residual Tax (if purchased at end)
-             const residualTax = residual * (taxPct / 100);
-             
-             // Reuse mortgage engine for structure, then override
-             calc = mortgageCalculator.calculate_mortgage(params);
-             
-             // Overrides
-             calc.derived.p_and_i = totalMonthly;
-             calc.derived.principal_0 = adjCapCost; // Show Adj Cap Cost as "Loan Amount" equivalent for UI
-             calc.totals.payments = totalMonthly * termMonths;
-             calc.totals.interest = financeFee * termMonths; // Total Rent Charge
-             
-             // Store specific values for breakdown
-             calc.derived.tax_monthly = monthlyTax; 
-             calc.derived.depreciation_monthly = depreciation;
-             calc.derived.rent_charge_monthly = financeFee;
-             calc.derived.upfront_tax = upfrontTax; 
-             calc.derived.residual_tax = residualTax;
-             
-          } else {
-             calc = mortgageCalculator.calculate_mortgage(params);
-          }
+        let calc;
+
+        // Lease Calculation Logic
+        if (params.is_lease) {
+          // Inputs
+          const price = params.auto_price_computed;
+          const down = toNumber(document.getElementById('down_payment_value')?.value || 0);
+          const tradeVal = toNumber(document.getElementById('trade_in_value')?.value || 0);
+          const tradeOwed = toNumber(document.getElementById('trade_in_owed')?.value || 0);
+          const incentives = toNumber(document.getElementById('cash_incentives')?.value || 0);
+          const taxPct = toNumber(document.getElementById('sales_tax_pct')?.value || 0);
+          // const titleFees = toNumber(document.getElementById('title_fees')?.value || 0); // Fees usually upfront in simple calc
+          const residual = params.residual_value;
+          const termMonths = Math.max(1, Math.round(toNumber(document.getElementById('loan_term_months')?.value || 36)));
+          const rate = params.rate_apr * 100; // rate_apr is decimal in params (e.g. 0.05), we need percent (5) for MF calc logic or stick to decimal?
+          // Actually, readParams converts rateRaw to decimal (0.05).
+          // Money Factor = APR / 2400 (where APR is percent, e.g. 5). Or APR_decimal / 24.
+          const moneyFactor = (params.rate_apr * 100) / 2400;
+
+          // Adjusted Cap Cost
+          const netTrade = tradeVal - tradeOwed;
+          const capReductions = down + netTrade + incentives;
+          const adjCapCost = Math.max(0, price - capReductions);
+
+          // Depreciation Fee
+          const depreciation = Math.max(0, (adjCapCost - residual) / termMonths);
+
+          // Finance Fee (Rent Charge)
+          const financeFee = (adjCapCost + residual) * moneyFactor;
+
+          // Base Monthly
+          const baseMonthly = depreciation + financeFee;
+
+          // Monthly Tax
+          // Reference logic: Tax on Monthly Payment stream AND Tax on Down Payment upfront.
+          const monthlyTax = baseMonthly * (taxPct / 100);
+
+          const totalMonthly = baseMonthly + monthlyTax;
+
+          // Upfront Tax on Down Payment (Capitalized Cost Reduction)
+          // Matching reference: Down * TaxRate
+          const upfrontTax = down * (taxPct / 100);
+
+          // Residual Tax (if purchased at end)
+          const residualTax = residual * (taxPct / 100);
+
+          // Reuse mortgage engine for structure, then override
+          calc = mortgageCalculator.calculate_mortgage(params);
+
+          // Overrides
+          calc.derived.p_and_i = totalMonthly;
+          calc.derived.principal_0 = adjCapCost; // Show Adj Cap Cost as "Loan Amount" equivalent for UI
+          calc.totals.payments = totalMonthly * termMonths;
+          calc.totals.interest = financeFee * termMonths; // Total Rent Charge
+
+          // Store specific values for breakdown
+          calc.derived.tax_monthly = monthlyTax;
+          calc.derived.depreciation_monthly = depreciation;
+          calc.derived.rent_charge_monthly = financeFee;
+          calc.derived.upfront_tax = upfrontTax;
+          calc.derived.residual_tax = residualTax;
+
+        } else {
+          calc = mortgageCalculator.calculate_mortgage(params);
+        }
 
           console.log('[DEBUG] Calc result:', calc);
           console.log('[DEBUG] Calling renderSummary...');
@@ -3938,16 +4677,16 @@
             console.error('[DEBUG] ERROR in renderSummary:', err);
             console.error('[DEBUG] Stack:', err.stack);
           }
-          
-          // Update UI Labels for Lease
-          if (params.is_lease) {
-             const kpiLabel = document.querySelector('.kpi-item:first-child .kpi-label');
-             if (kpiLabel) kpiLabel.textContent = 'Monthly Payment (Lease)';
-             const kpiLabel2 = document.querySelector('.kpi-item:last-child .kpi-label');
-             if (kpiLabel2) kpiLabel2.textContent = 'Adjusted Cap Cost';
-          } else {
-             // Labels are reset in renderSummary based on normal logic, but double check
-          }
+
+        // Update UI Labels for Lease
+        if (params.is_lease) {
+          const kpiLabel = document.querySelector('.kpi-item:first-child .kpi-label');
+          if (kpiLabel) kpiLabel.textContent = 'Monthly Payment (Lease)';
+          const kpiLabel2 = document.querySelector('.kpi-item:last-child .kpi-label');
+          if (kpiLabel2) kpiLabel2.textContent = 'Adjusted Cap Cost';
+        } else {
+          // Labels are reset in renderSummary based on normal logic, but double check
+        }
 
           // New outputs: loan totals, over-time table, PI donut
           renderInvestmentSummary(calc);
@@ -3956,7 +4695,7 @@
           renderMonthlyScheduleChart(calc);
           // Keep legacy hook if present
           if (typeof renderBreakdown === 'function') {
-            try { renderBreakdown(calc); } catch (_) {}
+          try { renderBreakdown(calc); } catch (_) { }
           }
           updateCarousel();
           updateSliderPositions();
@@ -4128,7 +4867,7 @@
               return;
             }
             if (fbStatusEl) fbStatusEl.textContent = 'Sending…';
-            try { emitTelemetry('user_feedback', { feedback }); } catch (_) {}
+          try { emitTelemetry('user_feedback', { feedback }); } catch (_) { }
 
             try {
               let ok = false;
@@ -4163,27 +4902,27 @@
           recalcButton.addEventListener("click", calculateAndRender);
         }
 
-        // Toggle between Calculate by Price vs Payment
-        const toggleCalculateBy = () => {
-          const byPayment = document.getElementById('calculate_by_payment')?.checked;
-          const priceLabel = document.getElementById('auto_price_label');
-          const paymentLabel = document.getElementById('monthly_payment_label');
-          
-          if (byPayment) {
-            priceLabel?.classList.add('is-hidden');
-            paymentLabel?.classList.remove('is-hidden');
-          } else {
-            priceLabel?.classList.remove('is-hidden');
-            paymentLabel?.classList.add('is-hidden');
-          }
-          calculateAndRender();
-        };
+      // Toggle between Calculate by Price vs Payment
+      const toggleCalculateBy = () => {
+        const byPayment = document.getElementById('calculate_by_payment')?.checked;
+        const priceLabel = document.getElementById('auto_price_label');
+        const paymentLabel = document.getElementById('monthly_payment_label');
 
-        document.querySelectorAll('input[name="calculate_by"]').forEach(el => {
-          el.addEventListener('change', toggleCalculateBy);
-        });
-        // Initial sync
-        toggleCalculateBy();
+        if (byPayment) {
+          priceLabel?.classList.add('is-hidden');
+          paymentLabel?.classList.remove('is-hidden');
+        } else {
+          priceLabel?.classList.remove('is-hidden');
+          paymentLabel?.classList.add('is-hidden');
+        }
+        calculateAndRender();
+      };
+
+      document.querySelectorAll('input[name="calculate_by"]').forEach(el => {
+        el.addEventListener('change', toggleCalculateBy);
+      });
+      // Initial sync
+      toggleCalculateBy();
 
         inputs.loan_type.addEventListener("change", () => {
           mergeProgramDefaults();
@@ -4192,12 +4931,12 @@
 
         // ---------- Persisted user inputs (72h) via Apps SDK widgetState with localStorage fallback ----------
         const PERSIST_KEY = "alc_user_inputs_state_v1";
-        const PERSIST_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+      const PERSIST_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
         const PERSIST_INPUT_IDS = [
           'auto_price', 'title_fees', 'down_payment_value', 'interest_rate_pct', 'loan_term_months',
           'cash_incentives', 'trade_in_value', 'trade_in_owed',
-          'state', 'sales_tax_pct', 'monthly_payment', 'residual_value'
+        'state', 'sales_tax_pct', 'monthly_payment', 'residual_value'
         ];  
 
         const readToggleValue = (yesId, noId) => {
@@ -4217,13 +4956,13 @@
             savedAt: Date.now(),
             inputs: inputsObj,
             toggles: {
-              use_loan: readToggleValue('use_loan_yes','use_loan_no'),
-              need_repairs: readToggleValue('need_repairs_yes','need_repairs_no'),
-              price_mode: (document.getElementById('price_mode_price')?.checked ? 'price' : 'appreciation'),
-              // Auto Loan Toggles
-              calculate_by: (document.getElementById('calculate_by_payment')?.checked ? 'payment' : 'price'),
-              purchase_type: (document.getElementById('purchase_type_lease')?.checked ? 'lease' : 'loan'),
-              include_taxes_fees: !!(document.getElementById('include_taxes_fees')?.checked)
+            use_loan: readToggleValue('use_loan_yes', 'use_loan_no'),
+            need_repairs: readToggleValue('need_repairs_yes', 'need_repairs_no'),
+            price_mode: (document.getElementById('price_mode_price')?.checked ? 'price' : 'appreciation'),
+            // Auto Loan Toggles
+            calculate_by: (document.getElementById('calculate_by_payment')?.checked ? 'payment' : 'price'),
+            purchase_type: (document.getElementById('purchase_type_lease')?.checked ? 'lease' : 'loan'),
+            include_taxes_fees: !!(document.getElementById('include_taxes_fees')?.checked)
             }
           };
           return state;
@@ -4238,34 +4977,34 @@
               window.openai.setWidgetState({ ...base, rentalInputsState: state });
             }
             // Fallback localStorage for cross-prompt persistence
-            try { localStorage.setItem(PERSIST_KEY, JSON.stringify(state)); } catch(_) {}
-          } catch(_) { /* no-op */ }
-        };
+          try { localStorage.setItem(PERSIST_KEY, JSON.stringify(state)); } catch (_) { }
+        } catch (_) { /* no-op */ }
+      };
 
-        const purgeSavedState = () => {
-          try {
-            if (window?.openai?.setWidgetState) {
-              const base = window?.openai?.widgetState ? { ...window.openai.widgetState } : {};
-              delete base.rentalInputsState;
-              window.openai.setWidgetState(base);
-            }
-          } catch (_) {}
-          try { localStorage.removeItem(PERSIST_KEY); } catch (_) {}
+      const purgeSavedState = () => {
+        try {
+          if (window?.openai?.setWidgetState) {
+            const base = window?.openai?.widgetState ? { ...window.openai.widgetState } : {};
+            delete base.rentalInputsState;
+            window.openai.setWidgetState(base);
+          }
+        } catch (_) { }
+        try { localStorage.removeItem(PERSIST_KEY); } catch (_) { }
         };
 
         const loadUserInputsState = () => {
           let state = null;
           // First, try the official widgetState (scoped to this widget instance)
-          try { state = window?.openai?.widgetState?.rentalInputsState || null; } catch(_) { state = null; }
+        try { state = window?.openai?.widgetState?.rentalInputsState || null; } catch (_) { state = null; }
           // If no widgetState, fall back to localStorage for cross-prompt persistence
           if (!state) {
-            try { state = JSON.parse(localStorage.getItem(PERSIST_KEY) || 'null'); } catch(_) { state = null; }
-          }
-          // If still no state, or it's expired, purge and return null
-          if (!state || !state.savedAt || (Date.now() - state.savedAt) > PERSIST_TTL_MS) {
-            purgeSavedState();
-            return null;
-          }
+          try { state = JSON.parse(localStorage.getItem(PERSIST_KEY) || 'null'); } catch (_) { state = null; }
+        }
+        // If still no state, or it's expired, purge and return null
+        if (!state || !state.savedAt || (Date.now() - state.savedAt) > PERSIST_TTL_MS) {
+          purgeSavedState();
+          return null;
+        }
           return state;
         };
 
@@ -4309,68 +5048,68 @@
               const no = document.getElementById(noId);
               if (yes && no) { yes.checked = !!on; no.checked = !on; }
             };
-            setRadio('use_loan_yes','use_loan_no', !!state.toggles?.use_loan);
-            setRadio('need_repairs_yes','need_repairs_no', !!state.toggles?.need_repairs);
+          setRadio('use_loan_yes', 'use_loan_no', !!state.toggles?.use_loan);
+          setRadio('need_repairs_yes', 'need_repairs_no', !!state.toggles?.need_repairs);
             const priceOn = (state.toggles?.price_mode === 'price');
             const pmPrice = document.getElementById('price_mode_price');
             const pmApp = document.getElementById('price_mode_appreciation');
             if (pmPrice && pmApp) { pmPrice.checked = priceOn; pmApp.checked = !priceOn; }
 
-            // Auto Loan Toggles restoration
-            if (state.toggles?.calculate_by) {
-              const isPayment = state.toggles.calculate_by === 'payment';
-              const cbPayment = document.getElementById('calculate_by_payment');
-              const cbPrice = document.getElementById('calculate_by_price');
-              if (cbPayment && cbPrice) {
-                cbPayment.checked = isPayment;
-                cbPrice.checked = !isPayment;
-                // Trigger change event to update UI visibility
-                cbPayment.dispatchEvent(new Event('change', { bubbles: true }));
-              }
+          // Auto Loan Toggles restoration
+          if (state.toggles?.calculate_by) {
+            const isPayment = state.toggles.calculate_by === 'payment';
+            const cbPayment = document.getElementById('calculate_by_payment');
+            const cbPrice = document.getElementById('calculate_by_price');
+            if (cbPayment && cbPrice) {
+              cbPayment.checked = isPayment;
+              cbPrice.checked = !isPayment;
+              // Trigger change event to update UI visibility
+              cbPayment.dispatchEvent(new Event('change', { bubbles: true }));
             }
-            if (state.toggles?.purchase_type) {
-              const isLease = state.toggles.purchase_type === 'lease';
-              const ptLease = document.getElementById('purchase_type_lease');
-              const ptLoan = document.getElementById('purchase_type_loan');
-              if (ptLease && ptLoan) {
-                ptLease.checked = isLease;
-                ptLoan.checked = !isLease;
-              }
+          }
+          if (state.toggles?.purchase_type) {
+            const isLease = state.toggles.purchase_type === 'lease';
+            const ptLease = document.getElementById('purchase_type_lease');
+            const ptLoan = document.getElementById('purchase_type_loan');
+            if (ptLease && ptLoan) {
+              ptLease.checked = isLease;
+              ptLoan.checked = !isLease;
             }
-            if (typeof state.toggles?.include_taxes_fees !== 'undefined') {
-               const inc = document.getElementById('include_taxes_fees');
-               if (inc) inc.checked = !!state.toggles.include_taxes_fees;
-            }
+          }
+          if (typeof state.toggles?.include_taxes_fees !== 'undefined') {
+            const inc = document.getElementById('include_taxes_fees');
+            if (inc) inc.checked = !!state.toggles.include_taxes_fees;
+          }
 
-          } catch(_) {}
-          
-          // Trigger input events on all hydrated fields to ensure sliders/UI sync
-          entries.forEach(([id]) => {
-             const el = document.getElementById(id);
-             if (el) el.dispatchEvent(new Event('input', { bubbles: true }));
-          });
-          
+        } catch (_) { }
+
+        // Trigger input events on all hydrated fields to ensure sliders/UI sync
+        entries.forEach(([id]) => {
+          const el = document.getElementById(id);
+          if (el) el.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+
           return true;
         };
 
         const clearUserInputsState = () => {
-          purgeSavedState();
-          // Reset manual edit flags so defaults can re-apply
-          taxEdited = false;
-          closingEdited = false;
-          rateEdited = false;
-          autoSalesTaxEdited = false;
+        purgeSavedState();
+        // Reset manual edit flags so defaults can re-apply
+        taxEdited = false;
+        closingEdited = false;
+        rateEdited = false;
+        autoSalesTaxEdited = false;
         };
 
         const bindRecalc = (id, evt = 'input') => {
           const el = document.getElementById(id);
           if (!el) return;
           el.addEventListener(evt, () => {
-            // Don't flag as user edit or save state if we are just initializing defaults
-            if (isSettingDefaults) {
-               calculateAndRender();
-               return;
-            }
+          // Don't flag as user edit or save state if we are just initializing defaults
+          if (isSettingDefaults) {
+            calculateAndRender();
+            return;
+          }
 
             didUserEdit = true;
             if (id === 'interest_rate_pct' || id === 'loan_rate_slider') rateEdited = true;
@@ -4383,23 +5122,23 @@
         };
         [
           // Income
-          'monthly_rent','other_monthly_income','vacancy_rate_pct',
-          'monthly_rent_increase_pct','other_monthly_income_increase_pct',
+        'monthly_rent', 'other_monthly_income', 'vacancy_rate_pct',
+        'monthly_rent_increase_pct', 'other_monthly_income_increase_pct',
           // Operating expenses
-          'exp_property_tax_annual','exp_insurance_annual','exp_hoa_annual','exp_maintenance_annual','exp_other_annual',
-          'exp_property_tax_increase_pct','exp_insurance_increase_pct','exp_hoa_increase_pct','exp_maintenance_increase_pct','exp_other_increase_pct',
+        'exp_property_tax_annual', 'exp_insurance_annual', 'exp_hoa_annual', 'exp_maintenance_annual', 'exp_other_annual',
+        'exp_property_tax_increase_pct', 'exp_insurance_increase_pct', 'exp_hoa_increase_pct', 'exp_maintenance_increase_pct', 'exp_other_increase_pct',
           // Purchase details / loan
-          'purchase_price','closing_cost','down_payment_pct','interest_rate_pct','loan_term_years',
+        'purchase_price', 'closing_cost', 'down_payment_pct', 'interest_rate_pct', 'loan_term_years',
           // Repairs
-          'repair_cost','after_repair_value',
+        'repair_cost', 'after_repair_value',
           // Sell / exit
-          'sell_price','holding_length_years','cost_to_sell_pct','value_appreciation_pct',
+        'sell_price', 'holding_length_years', 'cost_to_sell_pct', 'value_appreciation_pct',
           // Auto loan inputs (new)
-          'auto_price','down_payment_value','interest_rate_pct','loan_term_months','cash_incentives',
-          'trade_in_value','trade_in_owed','sales_tax_pct','title_fees','state','monthly_payment','residual_value'
+        'auto_price', 'down_payment_value', 'interest_rate_pct', 'loan_term_months', 'cash_incentives',
+        'trade_in_value', 'trade_in_owed', 'sales_tax_pct', 'title_fees', 'state', 'monthly_payment', 'residual_value'
         ].forEach((id) => bindRecalc(id, 'input'));
         // Radios / toggles
-        ['use_loan_yes','use_loan_no','need_repairs_yes','need_repairs_no','know_sell_price_yes','know_sell_price_no','price_mode_price','price_mode_appreciation','purchase_type_loan','purchase_type_lease','include_taxes_fees']
+      ['use_loan_yes', 'use_loan_no', 'need_repairs_yes', 'need_repairs_no', 'know_sell_price_yes', 'know_sell_price_no', 'price_mode_price', 'price_mode_appreciation', 'purchase_type_loan', 'purchase_type_lease', 'include_taxes_fees']
           .forEach((id) => bindRecalc(id, 'change'));
 
         // Explicit listeners for rate slider to set the edited flag immediately
@@ -4417,7 +5156,7 @@
             if (typeof step === 'number') sliderEl.step = String(step);
 
             const fmt = (v) => {
-              try { return formatCurrency(Number(v || 0)); } catch(_) { return String(v || 0); }
+            try { return formatCurrency(Number(v || 0)); } catch (_) { return String(v || 0); }
             };
 
             const updateFromNum = () => {
@@ -4444,34 +5183,34 @@
 
           setupDollarSlider('auto_price', 'auto_price_slider', 'auto_price_slider_display', 0, 150000, 100);
           setupDollarSlider('down_payment_value', 'auto_down_payment_slider', 'auto_down_payment_slider_display', 0, 50000, 100);
-          setupDollarSlider('monthly_payment', 'monthly_payment_slider', 'monthly_payment_slider_display', 0, 2000, 10);
-          // Ensure DP slider cannot exceed Auto Price (only in Price mode)
+        setupDollarSlider('monthly_payment', 'monthly_payment_slider', 'monthly_payment_slider_display', 0, 2000, 10);
+        // Ensure DP slider cannot exceed Auto Price (only in Price mode)
           const apNum = document.getElementById('auto_price');
           const apSlider = document.getElementById('auto_price_slider');
           const dpSlider = document.getElementById('auto_down_payment_slider');
           const dpNum = document.getElementById('down_payment_value');
-          const calcByPaymentEl = document.getElementById('calculate_by_payment');
-          
+        const calcByPaymentEl = document.getElementById('calculate_by_payment');
+
           const clampDp = () => {
             if (!apNum || !dpSlider || !dpNum) return;
-            const inPaymentMode = calcByPaymentEl && calcByPaymentEl.checked;
-            
-            if (inPaymentMode) {
-              // In Payment mode, Down Payment is an input that increases the affordability.
-              // It shouldn't be capped by the Auto Price input (which is hidden/stale).
-              // Let's set a reasonable max or leave it as initialized (e.g. 50k).
-              // If we previously clamped it down, we might need to restore the max.
-              if (Number(dpSlider.max) < 50000) dpSlider.max = "50000";
-              return;
-            }
+          const inPaymentMode = calcByPaymentEl && calcByPaymentEl.checked;
 
-            // In Price mode, Down Payment cannot exceed Price
-            const isPaymentMode = document.getElementById('calculate_by_payment')?.checked;
-            if (isPaymentMode) {
-                 dpSlider.max = "200000";
-                 return;
-            }
-            
+          if (inPaymentMode) {
+            // In Payment mode, Down Payment is an input that increases the affordability.
+            // It shouldn't be capped by the Auto Price input (which is hidden/stale).
+            // Let's set a reasonable max or leave it as initialized (e.g. 50k).
+            // If we previously clamped it down, we might need to restore the max.
+            if (Number(dpSlider.max) < 50000) dpSlider.max = "50000";
+            return;
+          }
+
+          // In Price mode, Down Payment cannot exceed Price
+          const isPaymentMode = document.getElementById('calculate_by_payment')?.checked;
+          if (isPaymentMode) {
+            dpSlider.max = "200000";
+            return;
+          }
+
             const ap = Number(apNum.value || 0);
             dpSlider.max = String(Math.max(0, ap));
             if (Number(dpSlider.value) > ap) {
@@ -4484,10 +5223,10 @@
           };
           if (apNum) apNum.addEventListener('input', clampDp);
           if (apSlider) apSlider.addEventListener('input', clampDp);
-          // Also re-check clamping when toggle changes
-          document.querySelectorAll('input[name="calculate_by"]').forEach(el => {
-            el.addEventListener('change', clampDp);
-          });
+        // Also re-check clamping when toggle changes
+        document.querySelectorAll('input[name="calculate_by"]').forEach(el => {
+          el.addEventListener('change', clampDp);
+        });
           clampDp();
         })();
         updateMiVisibility();
@@ -4499,10 +5238,10 @@
         const stateEl = document.getElementById('state');
         if (stateEl) {
           stateEl.addEventListener('change', () => {
-            // When user explicitly changes state, always update sales tax to that state's default
-            setSalesTaxFromState(true);
-            // Reset the "manual edit" flag so future non-forced updates could theoretically work (though mainly we want to allow the state change to take effect now)
-            autoSalesTaxEdited = false;
+          // When user explicitly changes state, always update sales tax to that state's default
+          setSalesTaxFromState(true);
+          // Reset the "manual edit" flag so future non-forced updates could theoretically work (though mainly we want to allow the state change to take effect now)
+          autoSalesTaxEdited = false;
             calculateAndRender();
             saveUserInputsState();
           });
@@ -4519,8 +5258,8 @@
             }
             const params = readParams();
             const calc = mortgageCalculator.calculate_mortgage(params);
-            try { renderBreakdown(calc); } catch(_) {}
-            try { renderMonthlyScheduleChart(calc); } catch(_) {}
+          try { renderBreakdown(calc); } catch (_) { }
+          try { renderMonthlyScheduleChart(calc); } catch (_) { }
           });
         });
 
@@ -4784,114 +5523,114 @@
 
         const toggleLoanFields = () => {
           const loan = document.getElementById('purchase_type_loan');
-          const isLoan = !!(loan && loan.checked);
-          const isLease = !isLoan;
-          
-          // Toggle Lease vs Loan specific fields
-          document.querySelectorAll('.lease-only-field').forEach(el => el.classList.toggle('is-hidden', !isLease));
-          document.querySelectorAll('.loan-only-field').forEach(el => el.classList.toggle('is-hidden', !isLoan));
-          
-          // LAYOUT ADJUSTMENTS
-          const tradeInInput = document.getElementById('trade_in_value');
-          const tradeInLabel = tradeInInput ? tradeInInput.closest('label') : null;
-          
-          const salesTaxInput = document.getElementById('sales_tax_pct');
-          const salesTaxLabel = salesTaxInput ? salesTaxInput.closest('label') : null;
-          
-          const residualInput = document.getElementById('residual_value');
-          const residualLabel = residualInput ? residualInput.closest('label') : null;
+        const isLoan = !!(loan && loan.checked);
+        const isLease = !isLoan;
 
-          const purchaseInputsRow = document.getElementById('purchase_inputs_row');
-          const tradeInDetailsDetails = document.querySelector('details[data-openai-component="trade-in-details"]');
-          const tradeInRow = document.getElementById('trade_in_row');
-          const taxesFeesRow = document.getElementById('taxes_fees_row');
-          const residualRow = document.getElementById('residual_row');
+        // Toggle Lease vs Loan specific fields
+        document.querySelectorAll('.lease-only-field').forEach(el => el.classList.toggle('is-hidden', !isLease));
+        document.querySelectorAll('.loan-only-field').forEach(el => el.classList.toggle('is-hidden', !isLoan));
 
-          if (isLease) {
-             // LEASE MODE
-             
-             // 1. Move Trade-in Value to Purchase Details row
-             if (tradeInLabel && purchaseInputsRow && !purchaseInputsRow.contains(tradeInLabel)) {
-                purchaseInputsRow.appendChild(tradeInLabel);
-             }
-             
-             // 2. Move Sales Tax to Purchase Details row (right of Trade-in)
-             if (salesTaxLabel && purchaseInputsRow && !purchaseInputsRow.contains(salesTaxLabel)) {
-                purchaseInputsRow.appendChild(salesTaxLabel);
-             }
-             
-             // 3. Move Residual Value to where Sales Tax was (taxes_fees_row)
-             // We want it to be the first item in taxes_fees_row
-             if (residualLabel && taxesFeesRow) {
-                if (!taxesFeesRow.contains(residualLabel)) {
-                   taxesFeesRow.insertBefore(residualLabel, taxesFeesRow.firstChild);
-                }
-             }
+        // LAYOUT ADJUSTMENTS
+        const tradeInInput = document.getElementById('trade_in_value');
+        const tradeInLabel = tradeInInput ? tradeInInput.closest('label') : null;
 
-             // Hide Trade In Details section
-             if (tradeInDetailsDetails) tradeInDetailsDetails.classList.add('is-hidden');
-             
-             // Defaults logic: Set Term to 36 if it looks like a default switch
-             const termEl = document.getElementById('loan_term_months');
-             if (termEl && termEl.value === '60') { // Simple check to avoid overriding user custom input if not 60
-                 termEl.value = '36';
-                 // Also update slider if exists? Ideally dispatch input event but that triggers calc loop
-                 // We will let calculateAndRender handle it
-             }
+        const salesTaxInput = document.getElementById('sales_tax_pct');
+        const salesTaxLabel = salesTaxInput ? salesTaxInput.closest('label') : null;
 
-          } else {
-             // LOAN MODE
-             
-             // 1. Move Trade-in Value back to Trade In Details
-             if (tradeInLabel && tradeInRow && !tradeInRow.contains(tradeInLabel)) {
-                tradeInRow.appendChild(tradeInLabel);
-             }
-             
-             // 2. Move Sales Tax back to Taxes/Fees row
-             // It should be before the checkbox (which is likely the last child or we can prepend)
-             // Original layout: Sales Tax first, Checkbox second.
-             if (salesTaxLabel && taxesFeesRow) {
-                if (!taxesFeesRow.contains(salesTaxLabel)) {
-                   taxesFeesRow.insertBefore(salesTaxLabel, taxesFeesRow.firstChild);
-                }
-             }
-             
-             // 3. Move Residual Value back to its row (residual_row)
-             if (residualLabel && residualRow) {
-                if (!residualRow.contains(residualLabel)) {
-                   residualRow.appendChild(residualLabel);
-                }
-             }
+        const residualInput = document.getElementById('residual_value');
+        const residualLabel = residualInput ? residualInput.closest('label') : null;
 
-             // Show Trade In Details section
-             if (tradeInDetailsDetails) tradeInDetailsDetails.classList.remove('is-hidden');
+        const purchaseInputsRow = document.getElementById('purchase_inputs_row');
+        const tradeInDetailsDetails = document.querySelector('details[data-openai-component="trade-in-details"]');
+        const tradeInRow = document.getElementById('trade_in_row');
+        const taxesFeesRow = document.getElementById('taxes_fees_row');
+        const residualRow = document.getElementById('residual_row');
+
+        if (isLease) {
+          // LEASE MODE
+
+          // 1. Move Trade-in Value to Purchase Details row
+          if (tradeInLabel && purchaseInputsRow && !purchaseInputsRow.contains(tradeInLabel)) {
+            purchaseInputsRow.appendChild(tradeInLabel);
           }
 
-          // Update Term Label
-          const termLabel = document.querySelector('label[for="loan_term_months"]');
-          if (termLabel) {
-             const textNode = Array.from(termLabel.childNodes).find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim().length > 0);
-             if (textNode) {
-                textNode.textContent = isLease ? 'Lease Term (months) ' : 'Loan Term (months) ';
-             }
+          // 2. Move Sales Tax to Purchase Details row (right of Trade-in)
+          if (salesTaxLabel && purchaseInputsRow && !purchaseInputsRow.contains(salesTaxLabel)) {
+            purchaseInputsRow.appendChild(salesTaxLabel);
           }
+
+          // 3. Move Residual Value to where Sales Tax was (taxes_fees_row)
+          // We want it to be the first item in taxes_fees_row
+          if (residualLabel && taxesFeesRow) {
+            if (!taxesFeesRow.contains(residualLabel)) {
+              taxesFeesRow.insertBefore(residualLabel, taxesFeesRow.firstChild);
+            }
+          }
+
+          // Hide Trade In Details section
+          if (tradeInDetailsDetails) tradeInDetailsDetails.classList.add('is-hidden');
+
+          // Defaults logic: Set Term to 36 if it looks like a default switch
+          const termEl = document.getElementById('loan_term_months');
+          if (termEl && termEl.value === '60') { // Simple check to avoid overriding user custom input if not 60
+            termEl.value = '36';
+            // Also update slider if exists? Ideally dispatch input event but that triggers calc loop
+            // We will let calculateAndRender handle it
+          }
+
+        } else {
+          // LOAN MODE
+
+          // 1. Move Trade-in Value back to Trade In Details
+          if (tradeInLabel && tradeInRow && !tradeInRow.contains(tradeInLabel)) {
+            tradeInRow.appendChild(tradeInLabel);
+          }
+
+          // 2. Move Sales Tax back to Taxes/Fees row
+          // It should be before the checkbox (which is likely the last child or we can prepend)
+          // Original layout: Sales Tax first, Checkbox second.
+          if (salesTaxLabel && taxesFeesRow) {
+            if (!taxesFeesRow.contains(salesTaxLabel)) {
+              taxesFeesRow.insertBefore(salesTaxLabel, taxesFeesRow.firstChild);
+            }
+          }
+
+          // 3. Move Residual Value back to its row (residual_row)
+          if (residualLabel && residualRow) {
+            if (!residualRow.contains(residualLabel)) {
+              residualRow.appendChild(residualLabel);
+            }
+          }
+
+          // Show Trade In Details section
+          if (tradeInDetailsDetails) tradeInDetailsDetails.classList.remove('is-hidden');
+        }
+
+        // Update Term Label
+        const termLabel = document.querySelector('label[for="loan_term_months"]');
+        if (termLabel) {
+          const textNode = Array.from(termLabel.childNodes).find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim().length > 0);
+          if (textNode) {
+            textNode.textContent = isLease ? 'Lease Term (months) ' : 'Loan Term (months) ';
+          }
+        }
 
           // Hide/show the entire loan details group
           const group = document.getElementById('loan_details_group');
-          if (group) group.classList.toggle('is-hidden', !isLoan);
+        if (group) group.classList.toggle('is-hidden', !isLoan);
 
-          // Hide slide 3 (Amortization / Breakdown Over Time) in Lease mode
-          const amortizationView = document.getElementById('amortizationView');
-          const showAmortizationBtn = document.getElementById('showAmortizationBtn');
-          if (showAmortizationBtn) {
-             showAmortizationBtn.classList.toggle('is-hidden', isLease);
-          }
-          // If we are currently viewing amortization and switch to lease, go back
-          if (isLease && amortizationView && !amortizationView.classList.contains('is-hidden')) {
-             // Simulate back button click or just hide it
-             const backBtn = document.getElementById('backToBreakdownBtn');
-             if (backBtn) backBtn.click();
-          }
+        // Hide slide 3 (Amortization / Breakdown Over Time) in Lease mode
+        const amortizationView = document.getElementById('amortizationView');
+        const showAmortizationBtn = document.getElementById('showAmortizationBtn');
+        if (showAmortizationBtn) {
+          showAmortizationBtn.classList.toggle('is-hidden', isLease);
+        }
+        // If we are currently viewing amortization and switch to lease, go back
+        if (isLease && amortizationView && !amortizationView.classList.contains('is-hidden')) {
+          // Simulate back button click or just hide it
+          const backBtn = document.getElementById('backToBreakdownBtn');
+          if (backBtn) backBtn.click();
+        }
         };
 
         const toggleCalculationMode = () => {
@@ -4900,7 +5639,7 @@
           document.getElementById('monthly_payment_label').classList.toggle('is-hidden', byPrice);
         };
 
-        ['purchase_type_loan','purchase_type_lease']
+      ['purchase_type_loan', 'purchase_type_lease']
           .forEach((id) => {
             const el = document.getElementById(id);
             if (!el) return;
@@ -4930,32 +5669,32 @@
         // Breakdown list is read-only; no input listeners needed.
 
         // Notify Me When Rates Drop
-        const notifyBtn = document.getElementById('notifyRatesBtn');
-        const notifyBtnBottom = document.getElementById('notifyRatesBtnBottom');
+      const notifyBtn = document.getElementById('notifyRatesBtn');
+      const notifyBtnBottom = document.getElementById('notifyRatesBtnBottom');
 
-        const TURNSTILE_SITE_KEY = '__TURNSTILE_SITE_KEY__';
-        const TURNSTILE_ENABLED = Boolean(TURNSTILE_SITE_KEY && TURNSTILE_SITE_KEY !== '__TURNSTILE_SITE_KEY__');
-        let turnstileWidgetId = null;
-        let turnstileTokenValue = "";
-        let attachTurnstile = null;
-        const resetTurnstile = () => {
-          turnstileTokenValue = "";
-          if (typeof turnstile !== 'undefined' && turnstileWidgetId !== null) {
-            try {
-              turnstile.reset(turnstileWidgetId);
-            } catch (_) {}
-          }
-        };
+      const TURNSTILE_SITE_KEY = '__TURNSTILE_SITE_KEY__';
+      const TURNSTILE_ENABLED = Boolean(TURNSTILE_SITE_KEY && TURNSTILE_SITE_KEY !== '__TURNSTILE_SITE_KEY__');
+      let turnstileWidgetId = null;
+      let turnstileTokenValue = "";
+      let attachTurnstile = null;
+      const resetTurnstile = () => {
+        turnstileTokenValue = "";
+        if (typeof turnstile !== 'undefined' && turnstileWidgetId !== null) {
+          try {
+            turnstile.reset(turnstileWidgetId);
+          } catch (_) { }
+        }
+      };
 
         const SUBSCRIBE_KEY = "mc_rates_subscribed";
         const markSubscribed = () => {
-          try { localStorage.setItem(SUBSCRIBE_KEY, "1"); } catch (_) {}
+        try { localStorage.setItem(SUBSCRIBE_KEY, "1"); } catch (_) { }
           try {
             if (window?.openai?.setWidgetState) {
               const s = window.openai.widgetState || {};
               window.openai.setWidgetState({ ...s, hasSubscribedRates: true });
             }
-          } catch (_) {}
+        } catch (_) { }
           if (notifyBtn) notifyBtn.style.display = "none";
           if (notifyBtnBottom) notifyBtnBottom.style.display = "none";
         };
@@ -4977,6 +5716,7 @@
         const showAmortizationBtn = document.getElementById('showAmortizationBtn');
         const showAmortizationSummaryBtn = document.getElementById('showAmortizationSummaryBtn');
         const backToBreakdownBtn = document.getElementById('backToBreakdownBtn');
+      const backToInputsBtnBottom = document.getElementById('backToInputsBtnBottom');
 
         const showView = (viewToShow) => {
           [summaryView, breakdownView, amortizationView].forEach(view => {
@@ -5021,6 +5761,28 @@
             scrollViewToTop(breakdownView);
           });
         }
+      if (backToInputsBtnBottom) {
+        backToInputsBtnBottom.addEventListener('click', () => {
+          showView('summaryView');
+          scrollViewToTop(summaryView);
+        });
+      }
+
+      const backToInputsBtnSlide3 = document.getElementById('backToInputsBtnSlide3');
+      const backToBreakdownBtnSlide3 = document.getElementById('backToBreakdownBtnSlide3');
+
+      if (backToInputsBtnSlide3) {
+        backToInputsBtnSlide3.addEventListener('click', () => {
+          showView('breakdownView');
+          scrollViewToTop(breakdownView);
+        });
+      }
+      if (backToBreakdownBtnSlide3) {
+        backToBreakdownBtnSlide3.addEventListener('click', () => {
+            showView('breakdownView');
+            scrollViewToTop(breakdownView);
+          });
+        }
 
         // Show summary view by default
         showView('summaryView');
@@ -5038,7 +5800,7 @@
 
           requestAnimationFrame(centerNotifyUnderRate);
           window.addEventListener('resize', centerNotifyUnderRate);
-          let overlay, emailInput, statusEl, cancelBtn, submitBtn, captchaContainer;
+        let overlay, emailInput, statusEl, cancelBtn, submitBtn, captchaContainer;
 
           const ensureNotifyModal = () => {
             if (overlay) return;
@@ -5064,65 +5826,65 @@
             statusEl = overlay.querySelector('#notifyStatus');
             cancelBtn = overlay.querySelector('#notifyCancel');
             submitBtn = overlay.querySelector('#notifySubmit');
-            captchaContainer = overlay.querySelector('#notifyCaptcha');
+          captchaContainer = overlay.querySelector('#notifyCaptcha');
 
-            attachTurnstile = () => {
-              if (!captchaContainer) return;
-              if (!TURNSTILE_ENABLED) {
-                captchaContainer.textContent = 'Captcha not configured.';
-                captchaContainer.classList.add('captcha-error');
-                return;
-              }
-              if (typeof turnstile === 'undefined') {
-                captchaContainer.textContent = 'Loading captcha…';
-                return;
-              }
-              if (turnstileWidgetId !== null) {
-                resetTurnstile();
-                return;
-              }
-              try {
-                turnstileWidgetId = turnstile.render(captchaContainer, {
-                  sitekey: TURNSTILE_SITE_KEY,
-                  callback: (token) => {
-                    turnstileTokenValue = token;
-                    if (statusEl) statusEl.textContent = '';
-                  },
-                  'expired-callback': () => {
-                    turnstileTokenValue = '';
-                    if (statusEl) statusEl.textContent = 'Captcha expired. Please try again.';
-                  },
-                  'error-callback': () => {
-                    turnstileTokenValue = '';
-                    if (statusEl) statusEl.textContent = 'Captcha error. Please reload.';
-                  },
-                });
-              } catch (err) {
-                captchaContainer.textContent = 'Captcha failed to initialize.';
-                captchaContainer.classList.add('captcha-error');
-              }
-            };
-
-            const onCancel = () => {
-              overlay.style.display = 'none';
+          attachTurnstile = () => {
+            if (!captchaContainer) return;
+            if (!TURNSTILE_ENABLED) {
+              captchaContainer.textContent = 'Captcha not configured.';
+              captchaContainer.classList.add('captcha-error');
+              return;
+            }
+            if (typeof turnstile === 'undefined') {
+              captchaContainer.textContent = 'Loading captcha…';
+              return;
+            }
+            if (turnstileWidgetId !== null) {
               resetTurnstile();
-            };
+              return;
+            }
+            try {
+              turnstileWidgetId = turnstile.render(captchaContainer, {
+                sitekey: TURNSTILE_SITE_KEY,
+                callback: (token) => {
+                  turnstileTokenValue = token;
+                  if (statusEl) statusEl.textContent = '';
+                },
+                'expired-callback': () => {
+                  turnstileTokenValue = '';
+                  if (statusEl) statusEl.textContent = 'Captcha expired. Please try again.';
+                },
+                'error-callback': () => {
+                  turnstileTokenValue = '';
+                  if (statusEl) statusEl.textContent = 'Captcha error. Please reload.';
+                },
+              });
+            } catch (err) {
+              captchaContainer.textContent = 'Captcha failed to initialize.';
+              captchaContainer.classList.add('captcha-error');
+            }
+          };
+
+          const onCancel = () => {
+            overlay.style.display = 'none';
+            resetTurnstile();
+          };
             cancelBtn.addEventListener('click', onCancel);
             overlay.addEventListener('click', (e) => { if (e.target === overlay) onCancel(); });
             emailInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
             submitBtn.addEventListener('click', () => submit());
 
-            if (TURNSTILE_ENABLED) {
-              if (window.__TURNSTILE_LOADED__ && typeof turnstile !== 'undefined') {
-                attachTurnstile();
-              } else {
-                const readyHandler = () => {
-                  attachTurnstile?.();
-                  window.removeEventListener('turnstile-ready', readyHandler);
-                };
-                window.addEventListener('turnstile-ready', readyHandler, { once: true });
-              }
+          if (TURNSTILE_ENABLED) {
+            if (window.__TURNSTILE_LOADED__ && typeof turnstile !== 'undefined') {
+              attachTurnstile();
+            } else {
+              const readyHandler = () => {
+                attachTurnstile?.();
+                window.removeEventListener('turnstile-ready', readyHandler);
+              };
+              window.addEventListener('turnstile-ready', readyHandler, { once: true });
             }
+          }
           };
 
           const openModal = () => {
@@ -5130,12 +5892,12 @@
             statusEl.textContent = '';
             overlay.style.display = 'flex';
             setTimeout(() => emailInput?.focus(), 0);
-            if (TURNSTILE_ENABLED) {
-              captchaContainer?.classList.remove('captcha-error');
-              attachTurnstile?.();
-            } else if (statusEl) {
-              statusEl.textContent = 'Captcha not configured.';
-            }
+          if (TURNSTILE_ENABLED) {
+            captchaContainer?.classList.remove('captcha-error');
+            attachTurnstile?.();
+          } else if (statusEl) {
+            statusEl.textContent = 'Captcha not configured.';
+          }
           };
 
           const SUBSCRIBE_ENDPOINTS = [
@@ -5159,12 +5921,12 @@
               statusEl.textContent = 'Please enter a valid email address.';
               return;
             }
-            if (!TURNSTILE_ENABLED) {
-              statusEl.textContent = 'Captcha not configured. Please try again later.';
-              return;
-            }
-            if (!turnstileTokenValue) {
-              statusEl.textContent = 'Please complete the captcha.';
+          if (!TURNSTILE_ENABLED) {
+            statusEl.textContent = 'Captcha not configured. Please try again later.';
+            return;
+          }
+          if (!turnstileTokenValue) {
+            statusEl.textContent = 'Please complete the captcha.';
               return;
             }
             statusEl.textContent = 'Subscribing…';
@@ -5179,7 +5941,7 @@
                 settlementId: 'mortgage_rates',
                 settlementName: 'Mortgage Rates',
                 deadline: null,
-                turnstileToken: turnstileTokenValue,
+              turnstileToken: turnstileTokenValue,
               };
               for (const url of SUBSCRIBE_ENDPOINTS) {
                 try {
@@ -5205,17 +5967,17 @@
                 statusEl.textContent = data.message || "You're subscribed!";
                 markSubscribed();
                 overlay.style.display = 'none';
-                resetTurnstile();
+              resetTurnstile();
                 window.setTimeout(() => window.alert(`${data.message || "You're subscribed!"}\nConfirmation: ${code}`), 50);
               } else {
                 const detail = data?.error || (typeof data?.detail === 'string' ? data.detail : '') || resp.statusText || raw || 'Unknown error';
                 statusEl.textContent = `Subscription failed: ${detail}`;
-                resetTurnstile();
+              resetTurnstile();
               }
             } catch (err) {
               console.error('Notify subscription error', err);
               statusEl.textContent = 'Subscription failed. Please try again.';
-              resetTurnstile();
+            resetTurnstile();
             }
           };
 
@@ -5239,7 +6001,7 @@
           if (!numEl) return false;
           const text = `${val}%`;
           if (numEl.textContent !== text) numEl.textContent = text;
-          try { numEl.setAttribute('data-rate', String(val)); } catch (_) {}
+        try { numEl.setAttribute('data-rate', String(val)); } catch (_) { }
           // Also set default interest rate input if user hasn't edited it
           try {
             if (!rateEdited) {
@@ -5256,7 +6018,7 @@
                 saveUserInputsState();
               }
             }
-          } catch(_) {}
+        } catch (_) { }
           requestAnimationFrame(() => {
             if (typeof centerNotifyUnderRate === 'function') centerNotifyUnderRate();
           });
@@ -5294,20 +6056,20 @@
         };
 
         const refreshRateBadge = async (maxTries = 6) => {
-          try { emitTelemetry("rate_fetch_attempt", { maxTries }); } catch (_) {}
+        try { emitTelemetry("rate_fetch_attempt", { maxTries }); } catch (_) { }
           for (let attempt = 0; attempt < maxTries; attempt++) {
             const val = await fetchRateOnce();
             if (val != null) {
-              try { emitTelemetry("rate_fetch_success", { attempt, value: val }); } catch (_) {}
+            try { emitTelemetry("rate_fetch_success", { attempt, value: val }); } catch (_) { }
               const applied = applyRateBadge(val);
               if (applied) guardRateBadge(`${val}%`, 12000);
               return;
             }
-            try { emitTelemetry("rate_fetch_retry", { attempt }); } catch (_) {}
+          try { emitTelemetry("rate_fetch_retry", { attempt }); } catch (_) { }
             const delay = Math.min(8000, 500 * Math.pow(2, attempt));
             await new Promise((r) => setTimeout(r, delay));
           }
-          try { emitTelemetry("rate_fetch_failed", {}); } catch (_) {}
+        try { emitTelemetry("rate_fetch_failed", {}); } catch (_) { }
         };
 
         // Read parameters from ChatGPT tool call if available (robust fallbacks)
@@ -5328,21 +6090,21 @@
             if (v !== undefined && v !== null) {
               const keysNeedingNum = new Set([
                 // legacy mortgage
-                'home_value','down_payment_value','rate_apr','term_years','property_tax_input','homeowners_insurance_yearly','hoa_monthly','pmi_pct','annual_mi_pct','upfront_fee_pct','start_month','start_year','extra_principal_monthly','extra_start_month_index',
+              'home_value', 'down_payment_value', 'rate_apr', 'term_years', 'property_tax_input', 'homeowners_insurance_yearly', 'hoa_monthly', 'pmi_pct', 'annual_mi_pct', 'upfront_fee_pct', 'start_month', 'start_year', 'extra_principal_monthly', 'extra_start_month_index',
                 // rental-specific
-                'purchase_price','closing_cost','monthly_rent','other_monthly_income','vacancy_rate_pct','exp_property_tax_annual','exp_insurance_annual','exp_hoa_annual','exp_maintenance_annual','exp_other_annual','down_payment_pct','interest_rate_pct','loan_term_years','monthly_rent_increase_pct','other_monthly_income_increase_pct','exp_property_tax_increase_pct','exp_insurance_increase_pct','exp_hoa_increase_pct','exp_maintenance_increase_pct','exp_other_increase_pct','holding_length_years','cost_to_sell_pct','value_appreciation_pct','sell_price',
-          // auto-loan specific
-          'auto_price','loan_term_months','cash_incentives','trade_in_value','trade_in_owed','sales_tax_pct','title_fees',
-          'monthly_payment','residual_value'
-        ]);
-        if (k === 'down_payment_value' && keysNeedingNum.has(k)) {
-             // If baseDefaults is leaking "90000" from mortgage legacy, prevent it from overriding auto default
-             // only accept if explicitly provided in src (not inherited from some mortgage default)
-             // Ideally we rely on 'pickProvided' to only return keys that are actually present in the payload
-        }
-        out[k] = keysNeedingNum.has(k) ? parseNumberish(v) : v;
-      }
-    };
+              'purchase_price', 'closing_cost', 'monthly_rent', 'other_monthly_income', 'vacancy_rate_pct', 'exp_property_tax_annual', 'exp_insurance_annual', 'exp_hoa_annual', 'exp_maintenance_annual', 'exp_other_annual', 'down_payment_pct', 'interest_rate_pct', 'loan_term_years', 'monthly_rent_increase_pct', 'other_monthly_income_increase_pct', 'exp_property_tax_increase_pct', 'exp_insurance_increase_pct', 'exp_hoa_increase_pct', 'exp_maintenance_increase_pct', 'exp_other_increase_pct', 'holding_length_years', 'cost_to_sell_pct', 'value_appreciation_pct', 'sell_price',
+                // auto-loan specific
+              'auto_price', 'loan_term_months', 'cash_incentives', 'trade_in_value', 'trade_in_owed', 'sales_tax_pct', 'title_fees',
+              'monthly_payment', 'residual_value'
+              ]);
+            if (k === 'down_payment_value' && keysNeedingNum.has(k)) {
+              // If baseDefaults is leaking "90000" from mortgage legacy, prevent it from overriding auto default
+              // only accept if explicitly provided in src (not inherited from some mortgage default)
+              // Ideally we rely on 'pickProvided' to only return keys that are actually present in the payload
+            }
+              out[k] = keysNeedingNum.has(k) ? parseNumberish(v) : v;
+            }
+          };
           setIf('loan_type', src.loan_type);
           setIf('home_value', src.home_value);
           setIf('down_payment_value', src.down_payment_value);
@@ -5372,10 +6134,10 @@
           setIf('sales_tax_pct', src.sales_tax_pct);
           setIf('title_fees', src.title_fees);
           setIf('include_taxes_fees', src.include_taxes_fees);
-          setIf('monthly_payment', src.monthly_payment);
-          setIf('residual_value', src.residual_value);
-          setIf('calculate_by', src.calculate_by);
-          setIf('purchase_type', src.purchase_type);
+        setIf('monthly_payment', src.monthly_payment);
+        setIf('residual_value', src.residual_value);
+        setIf('calculate_by', src.calculate_by);
+        setIf('purchase_type', src.purchase_type);
           // rental-specific overlays
           setIf('purchase_price', src.purchase_price);
           setIf('closing_cost', src.closing_cost);
@@ -5407,11 +6169,11 @@
         const applyRentalProvided = (params) => {
           if (!params || typeof params !== 'object') return;
           const ids = [
-            'purchase_price','closing_cost','monthly_rent','other_monthly_income','vacancy_rate_pct',
-            'exp_property_tax_annual','exp_insurance_annual','exp_hoa_annual','exp_maintenance_annual','exp_other_annual',
-            'down_payment_pct','interest_rate_pct','loan_term_years',
-            'monthly_rent_increase_pct','other_monthly_income_increase_pct','exp_property_tax_increase_pct','exp_insurance_increase_pct','exp_hoa_increase_pct','exp_maintenance_increase_pct','exp_other_increase_pct',
-            'holding_length_years','cost_to_sell_pct','value_appreciation_pct','sell_price'
+          'purchase_price', 'closing_cost', 'monthly_rent', 'other_monthly_income', 'vacancy_rate_pct',
+          'exp_property_tax_annual', 'exp_insurance_annual', 'exp_hoa_annual', 'exp_maintenance_annual', 'exp_other_annual',
+          'down_payment_pct', 'interest_rate_pct', 'loan_term_years',
+          'monthly_rent_increase_pct', 'other_monthly_income_increase_pct', 'exp_property_tax_increase_pct', 'exp_insurance_increase_pct', 'exp_hoa_increase_pct', 'exp_maintenance_increase_pct', 'exp_other_increase_pct',
+          'holding_length_years', 'cost_to_sell_pct', 'value_appreciation_pct', 'sell_price'
           ];
           ids.forEach((id) => {
             if (!(id in params)) return;
@@ -5426,10 +6188,10 @@
         const applyAutoProvided = (params) => {
           if (!params || typeof params !== 'object') return;
           const ids = [
-            'auto_price','down_payment_value','interest_rate_pct','loan_term_months',
-            'cash_incentives','trade_in_value','trade_in_owed',
-            'state','sales_tax_pct','title_fees','include_taxes_fees',
-            'monthly_payment','residual_value'
+          'auto_price', 'down_payment_value', 'interest_rate_pct', 'loan_term_months',
+          'cash_incentives', 'trade_in_value', 'trade_in_owed',
+          'state', 'sales_tax_pct', 'title_fees', 'include_taxes_fees',
+          'monthly_payment', 'residual_value'
           ];
           ids.forEach((id) => {
             if (!(id in params)) return;
@@ -5448,7 +6210,7 @@
               if (s) s.value = String(v);
               if (d) {
                 try { d.textContent = formatCurrency(Number(v || 0)); }
-                catch(_) { d.textContent = String(v); }
+              catch (_) { d.textContent = String(v); }
               }
             }
             if (id === 'down_payment_value') {
@@ -5457,44 +6219,44 @@
               if (s) s.value = String(v);
               if (d) {
                 try { d.textContent = formatCurrency(Number(v || 0)); }
-                catch(_) { d.textContent = String(v); }
-              }
+              catch (_) { d.textContent = String(v); }
             }
-            if (id === 'monthly_payment') {
-              const s = document.getElementById('monthly_payment_slider');
-              const d = document.getElementById('monthly_payment_slider_display');
-              if (s) s.value = String(v);
-              if (d) {
-                try { d.textContent = formatCurrency(Number(v || 0)); }
-                catch(_) { d.textContent = String(v); }
+          }
+          if (id === 'monthly_payment') {
+            const s = document.getElementById('monthly_payment_slider');
+            const d = document.getElementById('monthly_payment_slider_display');
+            if (s) s.value = String(v);
+            if (d) {
+              try { d.textContent = formatCurrency(Number(v || 0)); }
+              catch (_) { d.textContent = String(v); }
               }
             }
           });
 
-          // Handle Radio Buttons (Purchase Type & Calculation Mode)
-          if (params.purchase_type) {
-            const isLease = params.purchase_type === 'lease';
-            const ptLease = document.getElementById('purchase_type_lease');
-            const ptLoan = document.getElementById('purchase_type_loan');
-            if (ptLease && ptLoan) {
-               ptLease.checked = isLease;
-               ptLoan.checked = !isLease;
-               // Trigger change to update UI visibility
-               ptLease.dispatchEvent(new Event('change', { bubbles: true }));
-            }
+        // Handle Radio Buttons (Purchase Type & Calculation Mode)
+        if (params.purchase_type) {
+          const isLease = params.purchase_type === 'lease';
+          const ptLease = document.getElementById('purchase_type_lease');
+          const ptLoan = document.getElementById('purchase_type_loan');
+          if (ptLease && ptLoan) {
+            ptLease.checked = isLease;
+            ptLoan.checked = !isLease;
+            // Trigger change to update UI visibility
+            ptLease.dispatchEvent(new Event('change', { bubbles: true }));
           }
+        }
 
-          if (params.calculate_by) {
-            const isPayment = params.calculate_by === 'payment';
-            const cbPayment = document.getElementById('calculate_by_payment');
-            const cbPrice = document.getElementById('calculate_by_price');
-            if (cbPayment && cbPrice) {
-               cbPayment.checked = isPayment;
-               cbPrice.checked = !isPayment;
-               // Trigger change to update UI visibility
-               cbPayment.dispatchEvent(new Event('change', { bubbles: true }));
-            }
+        if (params.calculate_by) {
+          const isPayment = params.calculate_by === 'payment';
+          const cbPayment = document.getElementById('calculate_by_payment');
+          const cbPrice = document.getElementById('calculate_by_price');
+          if (cbPayment && cbPrice) {
+            cbPayment.checked = isPayment;
+            cbPrice.checked = !isPayment;
+            // Trigger change to update UI visibility
+            cbPayment.dispatchEvent(new Event('change', { bubbles: true }));
           }
+        }
         };
         const readProvidedParams = () => {
           const oa = (window && window.openai) ? window.openai : {};
@@ -5550,10 +6312,10 @@
         }
 
         // Ensure visibility and computed labels reflect hydrated/defaulted state
-        try { toggleLoanFields(); } catch(_) {}
-        try { toggleRepairFields(); } catch(_) {}
-        try { toggleSellFields(); updatePriceAppHeader?.(); } catch(_) {}
-        try { adjustPurchaseDetailsSpacing?.(); } catch(_) {}
+      try { toggleLoanFields(); } catch (_) { }
+      try { toggleRepairFields(); } catch (_) { }
+      try { toggleSellFields(); updatePriceAppHeader?.(); } catch (_) { }
+      try { adjustPurchaseDetailsSpacing?.(); } catch (_) { }
 
         calculateAndRender();
         saveUserInputsState();
@@ -5565,7 +6327,7 @@
           const late = readProvidedParams();
           if (late && Object.keys(late).length > 0) {
             if (DEBUG_HYDRATION) console.debug('[Hydration] Late overlay with provided params', late);
-            if (late.loan_type) { try { inputs.loan_type.value = late.loan_type; mergeProgramDefaults(); } catch(_){} }
+          if (late.loan_type) { try { inputs.loan_type.value = late.loan_type; mergeProgramDefaults(); } catch (_) { } }
             setDefaults(late);
             applyRentalProvided(late);
             applyAutoProvided(late);
@@ -5574,12 +6336,14 @@
           }
           return false;
         };
-        setTimeout(() => { if (!tryLateOverlay()) {
+      setTimeout(() => {
+        if (!tryLateOverlay()) {
           const id = setInterval(() => {
             retries += 1;
             if (tryLateOverlay() || retries >= 6) clearInterval(id);
           }, 200);
-        } }, 50);
+        }
+      }, 50);
 
         window.addEventListener('openai:set_globals', (ev) => {
           if (didUserEdit) return;
@@ -5587,7 +6351,7 @@
           const props = pickProvided(globals.toolOutput || globals.structuredContent || globals.toolInput || {});
           if (props && Object.keys(props).length > 0) {
             if (DEBUG_HYDRATION) console.debug('[Hydration] Event overlay from set_globals', props);
-            if (props.loan_type) { try { inputs.loan_type.value = props.loan_type; mergeProgramDefaults(); } catch(_){} }
+          if (props.loan_type) { try { inputs.loan_type.value = props.loan_type; mergeProgramDefaults(); } catch (_) { } }
             setDefaults(props);
             applyRentalProvided(props);
             applyAutoProvided(props);
@@ -5628,4 +6392,5 @@
       })();
     </script>
   </body>
+
 </html>

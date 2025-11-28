@@ -827,9 +827,9 @@ function createAutoLoanCalculatorServer(): Server {
               const rateStr = rateMatch[1] || rateMatch[2];
               if (rateStr) {
                 const rate = parseFloat(rateStr);
-                if (rate > 0 && rate < 30) {
-                  args.interest_rate_pct = rate;
-                }
+              if (rate > 0 && rate < 30) {
+                args.interest_rate_pct = rate;
+              }
               }
             }
           }
