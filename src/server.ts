@@ -61,7 +61,6 @@ const ROOT_DIR = (() => {
 
 const ASSETS_DIR = path.resolve(ROOT_DIR, "assets");
 const LOGS_DIR = path.resolve(__dirname, "..", "logs");
-const TURNSTILE_SITE_KEY = process.env.TURNSTILE_SITE_KEY || "";
 
 if (!fs.existsSync(LOGS_DIR)) {
   fs.mkdirSync(LOGS_DIR, { recursive: true });
@@ -668,12 +667,6 @@ function createAutoLoanCalculatorServer(): Server {
         console.log(`[MCP Injection] Injected "${rateText}", replacement success: ${replaced}`);
       } else {
         console.log(`[MCP Injection] No valid rate, sending blank badge`);
-      }
-
-      if (TURNSTILE_SITE_KEY) {
-        htmlToSend = htmlToSend.replace(/__TURNSTILE_SITE_KEY__/g, TURNSTILE_SITE_KEY);
-      } else {
-        console.warn("[Turnstile] TURNSTILE_SITE_KEY missing; captcha will not render");
       }
 
       return {
@@ -1533,43 +1526,13 @@ async function handleTrackEvent(req: IncomingMessage, res: ServerResponse) {
   }
 }
 
-// Turnstile verification
-async function verifyTurnstile(token: string): Promise<boolean> {
-  const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
-  
-  if (!TURNSTILE_SECRET_KEY) {
-    console.error("TURNSTILE_SECRET_KEY not set in environment variables");
-    return false;
-  }
-
-  if (!token) {
-    console.error("Turnstile token missing");
-    return false;
-  }
-
-  try {
-    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        secret: TURNSTILE_SECRET_KEY,
-        response: token,
-      }),
-    });
-
-    const data = await response.json();
-    return data.success === true;
-  } catch (error) {
-    console.error('Turnstile verification error:', error);
-    return false;
-  }
-}
 
 // Buttondown API integration
 async function subscribeToButtondown(email: string, settlementId: string, settlementName: string, deadline: string | null) {
   const BUTTONDOWN_API_KEY = process.env.BUTTONDOWN_API_KEY;
+  
+  console.log("[Buttondown] subscribeToButtondown called", { email, settlementId, settlementName });
+  console.log("[Buttondown] API key present:", !!BUTTONDOWN_API_KEY, "length:", BUTTONDOWN_API_KEY?.length || 0);
   
   if (!BUTTONDOWN_API_KEY) {
     throw new Error("BUTTONDOWN_API_KEY not set in environment variables");
@@ -1577,6 +1540,7 @@ async function subscribeToButtondown(email: string, settlementId: string, settle
 
   const metadata: Record<string, any> = {
     settlementName,
+    source: "auto-loan-calculator",
     subscribedAt: new Date().toISOString(),
   };
 
@@ -1585,18 +1549,24 @@ async function subscribeToButtondown(email: string, settlementId: string, settle
     metadata.deadline = deadline;
   }
 
+  const requestBody = {
+    email_address: email,
+    tags: [settlementId],
+    metadata,
+  };
+
+  console.log("[Buttondown] Sending request body:", JSON.stringify(requestBody));
+
   const response = await fetch("https://api.buttondown.email/v1/subscribers", {
     method: "POST",
     headers: {
       "Authorization": `Token ${BUTTONDOWN_API_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      email_address: email,
-      tags: [settlementId],
-      metadata,
-    }),
+    body: JSON.stringify(requestBody),
   });
+
+  console.log("[Buttondown] Response status:", response.status, response.statusText);
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -1622,6 +1592,8 @@ async function subscribeToButtondown(email: string, settlementId: string, settle
 // Update existing subscriber with new settlement
 async function updateButtondownSubscriber(email: string, settlementId: string, settlementName: string, deadline: string | null) {
   const BUTTONDOWN_API_KEY = process.env.BUTTONDOWN_API_KEY;
+  
+  console.log("[Buttondown] updateButtondownSubscriber called", { email, settlementId, settlementName });
   
   if (!BUTTONDOWN_API_KEY) {
     throw new Error("BUTTONDOWN_API_KEY not set in environment variables");
@@ -1666,7 +1638,15 @@ async function updateButtondownSubscriber(email: string, settlementId: string, s
   const updatedMetadata = {
     ...existingMetadata,
     [settlementKey]: settlementData,
+    source: "auto-loan-calculator",
   };
+
+  const requestBody = {
+    tags: updatedTags,
+    metadata: updatedMetadata,
+  };
+
+  console.log("[Buttondown] Sending update request body:", JSON.stringify(requestBody));
 
   const updateResponse = await fetch(`https://api.buttondown.email/v1/subscribers/${subscriberId}`, {
     method: "PATCH",
@@ -1674,11 +1654,10 @@ async function updateButtondownSubscriber(email: string, settlementId: string, s
       "Authorization": `Token ${BUTTONDOWN_API_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      tags: updatedTags,
-      metadata: updatedMetadata,
-    }),
+    body: JSON.stringify(requestBody),
   });
+
+  console.log("[Buttondown] Update response status:", updateResponse.status, updateResponse.statusText);
 
   if (!updateResponse.ok) {
     const errorText = await updateResponse.text();
@@ -1710,7 +1689,7 @@ async function handleSubscribe(req: IncomingMessage, res: ServerResponse) {
       body += chunk;
     }
 
-    const { email, settlementId, settlementName, deadline, turnstileToken } = JSON.parse(body);
+    const { email, settlementId, settlementName, deadline } = JSON.parse(body);
 
     if (!email || !email.includes("@")) {
       res.writeHead(400).end(JSON.stringify({ error: "Invalid email address" }));
@@ -1719,18 +1698,6 @@ async function handleSubscribe(req: IncomingMessage, res: ServerResponse) {
 
     if (!settlementId || !settlementName) {
       res.writeHead(400).end(JSON.stringify({ error: "Missing required fields" }));
-      return;
-    }
-
-    // Verify Turnstile token
-    if (!turnstileToken) {
-      res.writeHead(400).end(JSON.stringify({ error: "Security verification required" }));
-      return;
-    }
-
-    const isValidToken = await verifyTurnstile(turnstileToken);
-    if (!isValidToken) {
-      res.writeHead(400).end(JSON.stringify({ error: "Security verification failed. Please try again." }));
       return;
     }
 
