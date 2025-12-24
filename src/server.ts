@@ -1838,13 +1838,6 @@ const httpServer = createServer(
 
     const url = new URL(req.url, `http://${req.headers.host ?? "localhost"}`);
 
-    if (req.method === "GET" && url.pathname === "/.well-known/openai-apps-challenge") {
-      res.writeHead(200, { "Content-Type": "text/plain" }).end(
-        "qL19yrgizHU_oiPysOo4I6FMkigFUBEAmmDmS59GvCk"
-      );
-      return;
-    }
-
     if (
       req.method === "OPTIONS" &&
       (url.pathname === ssePath || url.pathname === postPath)
