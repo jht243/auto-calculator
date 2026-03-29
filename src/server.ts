@@ -426,7 +426,7 @@ function widgetMeta(widget: AutoLoanLeaseWidget, bustCache: boolean = false) {
   return {
     "openai/outputTemplate": templateUri,
     "openai/widgetDescription":
-      "Auto Loan & Lease Calculator for analyzing vehicle financing. Compare buying vs. leasing, calculate monthly payments, view amortization schedules, and breakdown total costs for loans and leases.",
+      "Interactive auto loan & lease calculator with configurable vehicle financing inputs, payment breakdown charts, amortization timeline, and cost comparison. Works with general prompts too — if the user says something like 'calculate my car payment' with no numbers, the calculator opens with sensible default values. All results are displayed in the widget; no additional text is needed.",
     "openai/componentDescriptions": {
       "rate-indicator": "Header indicator showing a relevant auto loan interest rate for market context; includes a refresh control.",
       "rate-badge": "Badge showing a recent auto loan interest rate reference; updates when refreshed.",
@@ -486,9 +486,9 @@ const widgets: AutoLoanLeaseWidget[] = [
     title: "Auto Loan & Lease Calculator — analyze monthly payments, leasing scenarios, and total costs",
     templateUri: `ui://widget/auto-loan-calculator.html?v=${VERSION}`,
     invoking:
-      "Opening the Auto Loan & Lease Calculator...",
+      "Opening the interactive auto loan & lease calculator with payment analytics...",
     invoked:
-      "Here is the Auto Loan & Lease Calculator. You can compare loan and lease options and adjust inputs.",
+      "Here is the auto loan & lease calculator with configurable inputs, payment breakdown, and amortization insights.",
     html: readWidgetHtml("auto-loan-calculator"),
   },
 ];
@@ -543,7 +543,7 @@ const toolInputParser = z.object({
 const tools: Tool[] = widgets.map((widget) => ({
   name: widget.id,
   description:
-    "Use this for auto loan analysis. The calculator opens with sensible default values and does NOT require explicit numbers to run—users can adjust inputs interactively in the widget. If the user provides specific values (vehicle price, loan term, interest rate, etc.), pass them to pre-populate the calculator. It calculates the monthly payment, total interest, and provides a full amortization schedule.",
+    "Use this for auto loan and lease analysis. It lets you adjust vehicle price, down payment, APR, term, trade-in, taxes, and fees, and visualizes payments and amortization. It will also open for general prompts (e.g., 'calculate my car payment') and start with sensible defaults if no numbers are provided. Do not add extra text after the widget loads — the interactive calculator is self-contained.",
   inputSchema: toolInputSchema,
   outputSchema: {
     type: "object",
@@ -616,7 +616,7 @@ function createAutoLoanCalculatorServer(): Server {
       name: "auto-loan-calculator",
       version: "0.1.0",
       description:
-        "Auto Loan & Lease Calculator is a comprehensive app for analyzing vehicle financing. It calculates monthly payments for loans and leases, total interest, and amortization. It opens with sensible defaults and supports prompts like ‘calculate car lease’.",
+        "Auto Loan & Lease Calculator is a comprehensive vehicle financing assistant. It calculates monthly payments for loans and leases, total interest, and amortization, and renders interactive charts and payoff timelines so buyers can compare financing scenarios. It responds to general prompts like ‘calculate my car payment’ by opening with sensible default values.",
     },
     {
       capabilities: {
