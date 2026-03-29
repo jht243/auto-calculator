@@ -5364,11 +5364,15 @@
 
         } catch (_) { }
 
-        // Trigger input events on all hydrated fields to ensure sliders/UI sync
+        // Trigger input events on all hydrated fields to ensure sliders/UI sync.
+        // Guard with isSettingDefaults so these programmatic events don't set
+        // didUserEdit, which would block late hydration from tool call params.
+        isSettingDefaults = true;
         entries.forEach(([id]) => {
           const el = document.getElementById(id);
           if (el) el.dispatchEvent(new Event('input', { bubbles: true }));
         });
+        isSettingDefaults = false;
 
           return true;
         };
@@ -5497,9 +5501,11 @@
             if (Number(dpSlider.value) > ap) {
               dpSlider.value = String(ap);
               dpNum.value = String(ap);
-              didUserEdit = true;
+              if (!isSettingDefaults) {
+                didUserEdit = true;
+                saveUserInputsState();
+              }
               calculateAndRender();
-              saveUserInputsState();
             }
           };
           if (apNum) apNum.addEventListener('input', clampDp);
