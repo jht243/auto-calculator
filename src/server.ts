@@ -549,18 +549,25 @@ const tools: Tool[] = widgets.map((widget) => ({
     type: "object",
     properties: {
       ready: { type: "boolean" },
-      timestamp: { type: "string" },
       currentRate: { type: ["number", "null"] },
-      auto_price: { type: "number" },
-      down_payment_value: { type: "number" },
-      interest_rate_pct: { type: "number" },
-      loan_term_months: { type: "number" },
+      auto_price: { type: ["number", "null"] },
+      down_payment_value: { type: ["number", "null"] },
+      interest_rate_pct: { type: ["number", "null"] },
+      loan_term_months: { type: ["number", "null"] },
+      cash_incentives: { type: ["number", "null"] },
+      trade_in_value: { type: ["number", "null"] },
+      trade_in_owed: { type: ["number", "null"] },
+      state: { type: ["string", "null"] },
+      sales_tax_pct: { type: ["number", "null"] },
+      title_fees: { type: ["number", "null"] },
+      include_taxes_fees: { type: ["boolean", "null"] },
+      purchase_type: { type: ["string", "null"] },
       summary: {
         type: "object",
         properties: {
+          vehicle_price: { type: ["number", "null"] },
           loan_amount: { type: ["number", "null"] },
           monthly_payment_pi: { type: ["number", "null"] },
-          vehicle_price: { type: ["number", "null"] },
           months_to_payoff: { type: ["number", "null"] },
           payoff_date: { type: ["string", "null"] },
           lifetime_interest: { type: ["number", "null"] },
@@ -699,9 +706,6 @@ function createAutoLoanCalculatorServer(): Server {
       let userAgentString: string | null = null;
       let deviceCategory = "Unknown";
       
-      // Log the full request to debug _meta location
-      console.log("Full request object:", JSON.stringify(request, null, 2));
-      
       try {
         const widget = widgetsById.get(request.params.name);
 
@@ -734,8 +738,6 @@ function createAutoLoanCalculatorServer(): Server {
         userAgentString = typeof userAgent === "string" ? userAgent : null;
         deviceCategory = classifyDevice(userAgentString);
         
-        // Debug log
-        console.log("Captured meta:", { userLocation, userLocale, userAgent });
 
         // If ChatGPT didn't pass structured arguments, try to infer key numbers from freeform text in meta
         try {
@@ -860,24 +862,6 @@ function createAutoLoanCalculatorServer(): Server {
           inferredQuery.push(`state: ${args.state}`);
         }
 
-        logAnalytics("tool_call_success", {
-          toolName: request.params.name,
-          params: args,
-          inferredQuery: inferredQuery.length > 0 ? inferredQuery.join(", ") : "Auto Loan Calculator",
-          responseTime,
-          device: deviceCategory,
-          userLocation: userLocation
-            ? {
-                city: userLocation.city,
-                region: userLocation.region,
-                country: userLocation.country,
-                timezone: userLocation.timezone,
-              }
-            : null,
-          userLocale,
-          userAgent,
-        });
-
         // Use a stable template URI so toolOutput reliably hydrates the component
         const widgetMetadata = widgetMeta(widget, false);
         console.log(`[MCP] Tool called: ${request.params.name}, returning templateUri: ${(widgetMetadata as any)["openai/outputTemplate"]}`);
@@ -887,7 +871,6 @@ function createAutoLoanCalculatorServer(): Server {
         // actually relevant to auto loans so ChatGPT sees a clean API.
         const structured = {
           ready: true,
-          timestamp: new Date().toISOString(),
           currentRate: fredRateCache?.payload?.ratePercent ?? null,
           // Auto-loan specific parameters
           auto_price: args.auto_price,
@@ -925,10 +908,7 @@ function createAutoLoanCalculatorServer(): Server {
           },
         } as const;
 
-        console.log("[MCP] Returning outputTemplate:", (metaForReturn as any)["openai/outputTemplate"]);
-        console.log("[MCP] Returning structuredContent:", structured);
-
-        // Log success analytics with rental parameters
+        // Log success analytics
         try {
           logAnalytics("tool_call_success", {
             responseTime,

@@ -1,64 +1,81 @@
 # Privacy Policy
 
-**Auto Loan Calculator**  
-*Last Updated: January 2025*
+**Auto Loan & Lease Finance Pro**  
+*Last Updated: March 2026*
 
 ## Overview
 
-Auto Loan Calculator is a tool that runs entirely in your browser within ChatGPT. We are committed to protecting your privacy and being transparent about our data practices.
+Auto Loan & Lease Finance Pro is a vehicle financing calculator that runs within ChatGPT. We are committed to protecting your privacy and being transparent about our data practices.
 
-## Data Collection
+## Data We Collect
 
-### What We Collect
-- **Usage Analytics**: Anonymous usage data including tool invocations, response times, and general device categories (iOS, Android, Desktop)
-- **Session Data**: Temporary session identifiers for MCP connection management
-- **Error Logs**: Anonymous error information to improve reliability
+### Usage Analytics (collected automatically via ChatGPT's system metadata)
+- **Coarse location**: City, region, country, and timezone as provided by ChatGPT's `_meta` context (not GPS or precise coordinates)
+- **Locale**: Language and regional preference (e.g., "en-US")
+- **User agent / device category**: Browser identification string, classified into general device categories (iOS, Android, macOS, Windows, Desktop)
+- **Tool invocation data**: Calculator parameters you provide (vehicle price, loan term, interest rate, etc.), response times, and error information
+
+### Email Address (collected only if you opt in)
+- If you choose to subscribe to rate-drop notifications via the in-widget "Subscribe" button, we collect the email address you provide
+
+### Session Data
+- Temporary session identifiers for MCP connection management, discarded when the session ends
 
 ### What We Do NOT Collect
-- Personal identification information (name, email, address)
 - Financial account credentials or banking information
 - Social Security Numbers or government IDs
 - Credit card or payment information
 - Health information
-- Precise location data
+- Precise location data (GPS coordinates or street addresses)
+- Full chat history or conversation transcripts
+
+## How We Use Your Data
+
+- **Calculator parameters**: Processed server-side to compute loan/lease results returned to you; also logged for aggregate analytics and error monitoring
+- **Coarse location and locale**: Used to pre-fill state-based sales tax defaults and to measure aggregate geographic usage patterns
+- **Device category**: Used to monitor app compatibility across platforms
+- **Email address**: Used solely to send rate-drop notification emails via our email delivery provider (see Third-Party Sharing below)
 
 ## Data Processing
 
-All subscription analysis and recommendations are performed:
-- **Client-side**: In your browser within the ChatGPT sandbox
-- **Locally**: Your subscription data is processed locally and not stored on our servers
-- **Ephemerally**: Session data is not persisted beyond the active session
+All loan and lease calculations are performed:
+- **Server-side**: Your calculator inputs are sent to our server, which computes results and returns them to the widget
+- **Client-side rendering**: The interactive widget runs in your browser within the ChatGPT sandbox
 
 ## Data Storage
 
-- **Browser LocalStorage**: Your subscription data may be cached in your browser's localStorage for convenience (30-day expiration). This data never leaves your device.
-- **Server Logs**: Anonymous analytics are logged for up to 30 days for service improvement.
+- **Browser localStorage**: Your in-progress form values are cached in your browser's localStorage for convenience (30-day expiration). This data never leaves your device. Clear it anytime with the "Reset" button.
+- **Server Logs**: Analytics logs are retained for up to 30 days, then automatically deleted.
 
 ## Third-Party Sharing
 
-We do not sell, rent, or share your data with third parties for marketing purposes. Anonymous, aggregated analytics may be used to improve the service.
+- **Buttondown** (buttondown.email): If you opt in to email notifications, your email address and subscription preferences are sent to Buttondown, our email delivery provider, for the sole purpose of delivering rate-drop alerts. Buttondown's privacy policy applies to data they process.
+- We do not sell, rent, or share your data with any other third parties for marketing purposes.
+- Anonymous, aggregated analytics may be used internally to improve the service.
 
 ## Data Retention
 
-- **LocalStorage**: Automatically expires after 30 days
+- **localStorage**: Automatically expires after 30 days
 - **Server Logs**: Retained for up to 30 days, then deleted
+- **Email subscriptions**: Retained by Buttondown until you unsubscribe
 
 ## Your Rights
 
 You can:
-- Clear your browser's localStorage at any time to remove cached data
-- Use the tool without providing any personal information
-- Contact us with privacy concerns
+- Clear your browser's localStorage at any time to remove cached form data
+- Use the calculator without providing any personal information (email is optional)
+- Unsubscribe from email notifications at any time via the link in any notification email
+- Request deletion of your server-side log data by contacting us (see below)
 
 ## Security
 
-- All communications use HTTPS encryption (HTTP is for local development only)
+- All production communications use HTTPS encryption
 - The widget runs in a sandboxed iframe with strict Content Security Policy
-- No sensitive personal data is transmitted or stored
+- No financial credentials or sensitive personal data are transmitted or stored
 
 ## Children's Privacy
 
-This service is not directed at children under 13. We do not knowingly collect information from children.
+This service is suitable for all ages but is not directed at children under 13. We do not knowingly collect information from children under 13.
 
 ## Changes to This Policy
 
@@ -74,4 +91,4 @@ For privacy questions, support, or data deletion requests:
 
 ---
 
-*This privacy policy complies with OpenAI's App Developer Guidelines for ChatGPT Apps.*
+*This privacy policy complies with OpenAI's ChatGPT App Submission Guidelines.*
