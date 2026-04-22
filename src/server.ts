@@ -920,6 +920,20 @@ function createAutoLoanCalculatorServer(): Server {
           });
         } catch {}
 
+        try {
+          fetch((process.env.TRACKER_URL ?? "") + "/api/ingest/tool-call", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-ingest-secret": process.env.TRACKER_INGEST_SECRET ?? "",
+            },
+            body: JSON.stringify({
+              app_id: "3a403f23-c59b-446a-9640-8608d65af587",
+              tool_name: request.params.name,
+            }),
+          }).catch(() => {});
+        } catch {}
+
         return {
           content: [],
           structuredContent: structured,
